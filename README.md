@@ -41,6 +41,6 @@ ghc -o bin/1_1 worksheet\ 1/1_1.hs
 - Filename conventions: `sheet_exercise.hs` 
 - If you want to run many exercises, consider creating a small driver file (e.g., `Main.hs`) that imports selected modules and exposes test runs.
 
-## Contact / attribution
+---
 
 _This exercises were done solely by Francisca Portugal on September to December 2025_
