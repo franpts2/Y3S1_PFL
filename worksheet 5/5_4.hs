@@ -42,6 +42,7 @@ fromList xs = build (sort xs)
          xs' = take k xs
          x:xs''= drop k xs
 
+------------------------------------------------
 
 -- a)
 size :: Set a -> Int

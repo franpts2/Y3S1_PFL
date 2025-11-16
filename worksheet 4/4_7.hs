@@ -1,4 +1,3 @@
-import Text.Read (Lexeme(String))
 type Dict = [String]
 
 readDict :: IO Dict
