@@ -86,7 +86,8 @@ factor :: Parser Expr
 factor = do n <- natural
             return (Num n)
          <|>
-         variable -- already returns a Parser Expr
+         do v <- variable
+            return (Var v)
          <|>
          do char '('
             e <- expr
@@ -98,9 +99,9 @@ natural :: Parser Integer
 natural = do xs <- many1 (satisfy isDigit)
              return (read xs)
 
-variable :: Parser Expr
+variable :: Parser String
 variable = do xs <- many1 (satisfy isLetter)
-              return (Var xs)
+              return xs
 
 ----------------------------------------------------------------             
   
