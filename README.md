@@ -36,9 +36,22 @@ ghc -o bin/1_1 worksheet\ 1/1_1.hs
 ./bin/1_1
 ```
 
+## Project 1
+
+There is a small project in the `project 1/` folder used for coursework.
+
+- `project 1/Calculator.hs` — main calculator implementation (can be loaded or compiled).
+- `project 1/Parsing.hs` — parsing helpers used by the calculator.
+
+To run the project:
+
+```bash
+ghci project\ 1/Calculator.hs
+```
+
 ## Conventions and tips
 
-- Filename conventions: `sheet_exercise.hs` 
+- Filename conventions: `sheet_exercise.hs`
 - If you want to run many exercises, consider creating a small driver file (e.g., `Main.hs`) that imports selected modules and exposes test runs.
 
 ---
