@@ -15,7 +15,7 @@ type Env = [(Name, Integer)]
 
 --
 -- a data type for expressions
--- made up from integer numbers, + and *
+-- made up from integer numbers
 --
 data Expr = Num Integer
           | Var Name
@@ -25,6 +25,10 @@ data Expr = Num Integer
           | Div Expr Expr
           | Mod Expr Expr
           deriving Show
+
+data Command = Assign Name Expr
+             | Eval Expr
+             deriving Show
 
 -- a recursive evaluator for expressions
 --
@@ -49,6 +53,8 @@ eval env (Mod e1 e2) = eval env e1 `mod` eval env e2
 -- termCont ::= '*' factor termCont | '/' factor termCont | '%' factor termCont | epsilon
 
 -- factor ::= variable | natural | '(' expr ')'
+
+-- command ::= variable ’=’ expr | expr
 
 expr :: Parser Expr
 expr = do t <- term
@@ -103,24 +109,39 @@ variable :: Parser String
 variable = do xs <- many1 (satisfy isLetter)
               return xs
 
+
+command :: Parser Command
+command = do v <- variable
+             char '='
+             e <- expr
+             return (Assign v e)
+          <|>
+          do e <- expr
+             return (Eval e)
+
 ----------------------------------------------------------------             
   
 main :: IO ()
 main
   = do txt <- getContents
-       calculator [] (lines txt)  -- if env parameter /= [] program works with vars defined here!
+       calculator [] (lines txt)
 
 -- | read-eval-print loop
 calculator :: Env -> [String] -> IO ()
 calculator env []  = return ()
-calculator env (l:ls) = do 
-                            let (output, nextEnv) = execute env l
-                            putStrLn output
-                            calculator nextEnv ls  
+calculator env (l:ls) = do let (output, nextEnv) = execute env l
+                           putStrLn output
+                           calculator nextEnv ls  
 
 -- | evaluate a single expression
 execute :: Env -> String -> (String, Env)
 execute env txt 
-    = case parse expr txt of
-        [ (tree, "") ] ->  (show (eval env tree), env)
+    = case parse command txt of
+        [ (cmd, "") ] ->  run env cmd
         _ -> ("parse error; try again", env)
+
+run :: Env -> Command -> (String, Env)
+run env (Eval e) = (show (eval env e), env)
+run env (Assign n e) = (show res, newEnv)
+    where res = eval env e
+          newEnv = (n, res) : env   -- add new variable (Name, Value) to the environment
