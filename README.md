@@ -1,4 +1,4 @@
-# Y3S2 - PFL (Functional and Logical Programming)
+# Y3S1 - PFL (Functional and Logical Programming)
 
 ## Overview
 
