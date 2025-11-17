@@ -10,11 +10,15 @@ module Main where
 import Parsing
 import Data.Char
 
+type Name = String
+type Env = [(Name, Integer)]
+
 --
 -- a data type for expressions
 -- made up from integer numbers, + and *
 --
 data Expr = Num Integer
+          | Var Name
           | Add Expr Expr
           | Sub Expr Expr
           | Mul Expr Expr
@@ -24,13 +28,16 @@ data Expr = Num Integer
 
 -- a recursive evaluator for expressions
 --
-eval :: Expr -> Integer
-eval (Num n) = n
-eval (Add e1 e2) = eval e1 + eval e2
-eval (Sub e1 e2) = eval e1 - eval e2
-eval (Mul e1 e2) = eval e1 * eval e2
-eval (Div e1 e2) = eval e1 `div` eval e2
-eval (Mod e1 e2) = eval e1 `mod` eval e2
+eval :: Env -> Expr -> Integer
+eval env (Num n) = n
+eval env (Var v) = case lookup v env of
+                    Just v -> v
+                    Nothing -> error "runtime error"
+eval env (Add e1 e2) = eval env e1 + eval env e2
+eval env (Sub e1 e2) = eval env e1 - eval env e2
+eval env (Mul e1 e2) = eval env e1 * eval env e2
+eval env (Div e1 e2) = eval env e1 `div` eval env e2
+eval env (Mod e1 e2) = eval env e1 `mod` eval env e2
 
 -- | a parser for expressions
 -- Grammar rules:
@@ -41,7 +48,7 @@ eval (Mod e1 e2) = eval e1 `mod` eval e2
 -- term ::= factor termCont
 -- termCont ::= '*' factor termCont | '/' factor termCont | '%' factor termCont | epsilon
 
--- factor ::= natural | '(' expr ')'
+-- factor ::= variable | natural | '(' expr ')'
 
 expr :: Parser Expr
 expr = do t <- term
@@ -78,33 +85,41 @@ termCont acc =  do char '*'
 factor :: Parser Expr
 factor = do n <- natural
             return (Num n)
-          <|>
-          do char '('
-             e <- expr
-             char ')'
-             return e
+         <|>
+         variable -- already returns a Parser Expr
+         <|>
+         do char '('
+            e <- expr
+            char ')'
+            return e
              
 
 natural :: Parser Integer
 natural = do xs <- many1 (satisfy isDigit)
              return (read xs)
 
+variable :: Parser Expr
+variable = do xs <- many1 (satisfy isLetter)
+              return (Var xs)
+
 ----------------------------------------------------------------             
   
 main :: IO ()
 main
   = do txt <- getContents
-       calculator (lines txt)
+       calculator [] (lines txt)  -- if env parameter /= [] program works with vars defined here!
 
 -- | read-eval-print loop
-calculator :: [String] -> IO ()
-calculator []  = return ()
-calculator (l:ls) = do putStrLn (evaluate l)
-                       calculator ls  
+calculator :: Env -> [String] -> IO ()
+calculator env []  = return ()
+calculator env (l:ls) = do 
+                            let (output, nextEnv) = execute env l
+                            putStrLn output
+                            calculator nextEnv ls  
 
 -- | evaluate a single expression
-evaluate :: String -> String
-evaluate txt
-  = case parse expr txt of
-      [ (tree, "") ] ->  show (eval tree)
-      _ -> "parse error; try again"  
+execute :: Env -> String -> (String, Env)
+execute env txt 
+    = case parse expr txt of
+        [ (tree, "") ] ->  (show (eval env tree), env)
+        _ -> ("parse error; try again", env)
