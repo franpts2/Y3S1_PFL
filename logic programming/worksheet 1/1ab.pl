@@ -7,6 +7,7 @@ female(pameron).
 female(haley).
 female(alex).
 female(lily).
+femaly(poppy).
 
 male(frank).
 male(jay).
@@ -22,6 +23,7 @@ male(dylan).
 male(luke).
 male(rexford).
 male(calhoun).
+male(george).
 
 % grace and frank are parents of phil
 parent(grace,phil).
@@ -55,7 +57,7 @@ parent(claire,alex).
 parent(phil,luke).
 parent(claire,luke).
 
-% grace and frank are parents of lily and rexford
+% mitchell and cameron are parents of lily and rexford
 parent(mitchell,lily).
 parent(cameron,lily).
 parent(mitchell,rexford).
@@ -64,6 +66,12 @@ parent(cameron,rexford).
 % pameron and bo are parents of calhoun
 parent(pameron,calhoun).
 parent(bo,calhoun).
+
+% haley and dylan are parents of george and poppy
+parent(haley,george).
+parent(haley,poppy).
+parent(dylan,george).
+parent(dylan,poppy).
 
 /* 1b)
 i. Is Haley a female?
