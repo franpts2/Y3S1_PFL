@@ -4,3 +4,5 @@ The exercises I had more difficulty solving were:
 - 1 d) ("who is a grandmother?")
 - 2 c) ii.
 - 2 c) v.
+- 5 a) i.
+- 5 a) iii.
