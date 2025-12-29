@@ -220,3 +220,11 @@ X = mitchell,
 Y = joe ? ;
 no
 */
+
+% 1 e)
+% MARRIAGES (marriage/3)
+marriage(dede,jay,1968).
+marriage(jay,gloria,2008).
+
+% DIVORCES (divorce/3)
+divorce(jay,dede,2003).
