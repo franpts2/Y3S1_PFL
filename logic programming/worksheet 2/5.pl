@@ -52,3 +52,14 @@ square_aux(N,Count,Acc,NextOdd,S):-
     square_aux(N,NewCount,NewAcc,NewNextOdd,S).
 
 % e)
+fibonacci(N,F):-
+	N >= 0,
+	fibonacci(N,0,1,F).
+
+fibonacci(0,A,_,A).
+
+fibonacci(N,A,B,F):-
+	N > 0,
+	N1 is N-1,
+	Next is A+B,
+	fibonacci(N1,B,Next,F).
