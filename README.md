@@ -1,5 +1,17 @@
 # Y3S1 - PFL (Functional and Logical Programming)
 
+## Index
+
+- [Overview](#overview)
+- [Repository Structure](#repository-structure)
+- [How to Run](#how-to-run)
+  - [the Haskell Exercises](#the-haskell-exercises)
+  - [the Prolog Exercises](#the-prolog-exercises)
+- [Projects](#projects)
+  - [Project 1 (Haskell)](#project-1-haskell)
+  - [Project 2 (Prolog)](#project-2-prolog)
+- [Conventions and Tips](#conventions-and-tips)
+
 ## Overview
 
 This repository contains solutions and exercises for the PFL (Functional and Logical Programming) course, Year 3 Semester 1.
@@ -19,7 +31,9 @@ The repository is organized into two main folders:
   - `worksheet N/` — Each directory contains Prolog source files (e.g., `N.pl`) for the respective worksheet.
   - This section is still in progress and may be updated further.
 
-## How to Run the Haskell Exercises
+## How to Run
+
+### ...the Haskell Exercises
 
 **Prerequisites:**
 
@@ -45,7 +59,7 @@ The repository is organized into two main folders:
   ./bin/1_1
   ```
 
-## How to Run the Prolog Exercises
+### ...the Prolog Exercises
 
 **Prerequisites:**
 
@@ -66,19 +80,24 @@ The repository is organized into two main folders:
   ```
 
   or
+
   ```prolog
   | ?- consult('logic programming/worksheet 1/1ab.pl').
   ```
 
-  and 
+  and
+
   ```prolog
   | ?- reconsult('logic programming/worksheet 1/1ab.pl').
   ```
+
   to update the file
 
 - Then you can call predicates defined in the file directly at the prompt.
 
-## Project 1 (Haskell)
+## Projects
+
+### Project 1 (Haskell)
 
 Located in `functional programming/project 1/`:
 
@@ -90,6 +109,10 @@ To run the project:
 ```bash
 ghci "functional programming/project 1/Calculator.hs"
 ```
+
+### Project 2 (Prolog)
+
+to do!
 
 ## Conventions and Tips
 
