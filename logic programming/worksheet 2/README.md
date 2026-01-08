@@ -7,3 +7,4 @@ The exercises I had more difficulty solving were:
 - 5 e)
 - 6 a)
 - 7 b)
+- 7 d) i.

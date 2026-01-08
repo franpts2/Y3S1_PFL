@@ -239,3 +239,19 @@ marriage_years(X,Y,Years):-
     (marriage(X,Y,YM); marriage(Y,X,YM)),
     (divorce(X,Y,YD); divorce(Y,X,YD)),
     Years is YD-YM.
+
+% d)
+% i.
+gloriadesc_notjays(X):- 
+    descendant_of(X,gloria),
+    \+ descendant_of(X,jay).
+
+% ii.
+ancestors_haleylily(X):-
+    ancestor_of(X,haley),
+    ancestor_of(X,lily).
+
+% iii.
+marriedto_dedegloria(X):-
+    (marriage(dede,X,_) ; marriage(X,dede,_)),
+    (marriage(gloria,X,_) ; marriage(X,gloria,_)).
