@@ -24,3 +24,12 @@ list_prod_aux([H|T],Acc,Prod):-
     Acc1 is Acc*H,
     list_prod_aux(T,Acc1,Prod).
 
+% d)
+inner_product(List1,List2,Result):-
+    inner_product(List1,List2,0,Result).
+
+inner_product([],[],Acc,Acc).
+inner_product([H1|T1],[H2|T2],Acc,Result):-
+    HR is H1*H2,
+    Acc1 is Acc+HR,
+    inner_product(T1,T2,Acc1,Result).
