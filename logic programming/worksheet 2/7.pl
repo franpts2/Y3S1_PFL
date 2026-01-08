@@ -255,3 +255,33 @@ ancestors_haleylily(X):-
 marriedto_dedegloria(X):-
     (marriage(dede,X,_) ; marriage(X,dede,_)),
     (marriage(gloria,X,_) ; marriage(X,gloria,_)).
+
+
+% e)
+born(jay, 1946-5-23).
+born(claire, 1970-11-13).
+born(mitchell, 1973-7-10).
+
+% i.
+split_date(YR-M-D,YR,M,D).
+
+before(X,Y):-
+    split_date(X,YRX,MX,DX),
+    split_date(Y,YRY,MY,DY),
+    (YRX<YRY ; (YRX=YRY, MX<MY) ; (YRX=YRY, MX=MY, DX<DY)).
+
+% ii.
+older(X,Y,X):-
+    born(X,XDate),
+    born(Y,YDate),
+    before(XDate,YDate).
+
+older(X,Y,Y):-
+    born(X,XDate),
+    born(Y,YDate),
+    before(YDate,XDate).
+
+% iii.
+oldest(X):-
+    born(X,_),
+    \+ (born(Y,_), older(Y,X,Y)).

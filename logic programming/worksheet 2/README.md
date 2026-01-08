@@ -8,3 +8,4 @@ The exercises I had more difficulty solving were:
 - 6 a)
 - 7 b)
 - 7 d) i.
+- 7 e)
