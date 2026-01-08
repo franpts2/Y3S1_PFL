@@ -16,3 +16,11 @@ list_sum_aux([H|T],Acc,Sum):-
 	list_sum_aux(T,Acc1,Sum).
 
 % c)
+list_prod(List,Prod):-
+    list_prod_aux(List,1,Prod).
+
+list_prod_aux([],Acc,Acc).
+list_prod_aux([H|T],Acc,Prod):-
+    Acc1 is Acc*H,
+    list_prod_aux(T,Acc1,Prod).
+
