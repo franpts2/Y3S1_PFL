@@ -33,3 +33,17 @@ inner_product([H1|T1],[H2|T2],Acc,Result):-
     HR is H1*H2,
     Acc1 is Acc+HR,
     inner_product(T1,T2,Acc1,Result).
+
+% e)
+count(Elem,List,N):-
+    count(Elem,List,0,N).
+
+count(_,[],Acc,Acc).
+
+count(Elem,[Elem|T],Acc,N):- % Head = Elem
+    Acc1 is Acc+1,
+    count(Elem,T,Acc1,N).
+
+count(Elem,[H|T],Acc,N):- % Head \= Elem
+    Elem \= H,
+    count(Elem,T,Acc,N).
