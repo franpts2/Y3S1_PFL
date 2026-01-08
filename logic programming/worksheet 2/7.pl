@@ -220,9 +220,16 @@ marriage(jay,gloria,2008).
 % DIVORCES (divorce/3)
 divorce(jay,dede,2003).
 
+
+
 % a)
 ancestor_of(X,Y):- parent(X,Y).
 ancestor_of(X,Y):-
 	parent(X,Z),
 	ancestor_of(Z,Y).
 	
+% b)
+descendant_of(X,Y):- parent(Y,X).
+descendant_of(X,Y):-
+	parent(Z,X),
+	descendant_of(Z,Y).
