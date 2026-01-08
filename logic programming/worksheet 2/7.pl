@@ -233,3 +233,9 @@ descendant_of(X,Y):- parent(Y,X).
 descendant_of(X,Y):-
 	parent(Z,X),
 	descendant_of(Z,Y).
+
+% c)
+marriage_years(X,Y,Years):-
+    (marriage(X,Y,YM); marriage(Y,X,YM)),
+    (divorce(X,Y,YD); divorce(Y,X,YD)),
+    Years is YD-YM.
