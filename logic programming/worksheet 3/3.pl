@@ -25,4 +25,10 @@ del_all(Elem,[H|T],[H|Rest]):-
 	del_all(Elem,T,Rest).
 
     
+% d)
+del_all_list([],List1,List1).
 
+del_all_list([H|T],List1,List2):-
+    del_all(H,List1,Temp),
+    del_all_list(T,Temp,List2).
+    
