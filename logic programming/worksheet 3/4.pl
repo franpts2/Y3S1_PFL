@@ -8,11 +8,11 @@ list_append([H1|T1],L2,[H1|Rest]):-
 
 % b)
 list_member(Elem,List):-
-	list_append(_,[Elem|_],List).
+	append(_,[Elem|_],List).
 
 % c)
 list_last(List,Last):-
-	list_append(_,[Last],List).
+	append(_,[Last],List).
 
 % d)
 list_nth(N,List,Elem):-
@@ -24,7 +24,7 @@ lists_append([],[]).
 
 lists_append([H|T],List):-
 	lists_append(T,RestFlat), % flattens the lists
-	list_append(H,RestFlat,List). % backtracks 
+	append(H,RestFlat,List). % backtracks 
 
 % f)
 list_del([],_,[]).
@@ -33,3 +33,7 @@ list_del(List,Elem,Res):-
 	append(Bef,[Elem|After],List), % split: List = Bef + [Elem|After]
 	append(Bef,After,Res).
 
+% g)
+list_before(First,Second,List):-
+	append(BefSecond,[Second|_],List),
+	append(_,[First|_],BefSecond). 
