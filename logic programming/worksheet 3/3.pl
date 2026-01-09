@@ -77,3 +77,14 @@ intersperse(_,[X],[X]).
 
 intersperse(Elem,[H1, H2 |T],[H1, Elem |Rest]):-
     intersperse(Elem,[H2|T],Rest).
+
+% i)
+insert_elem(_,[],Elem,[Elem]).
+
+insert_elem(0,T,Elem,[Elem|T]).
+
+insert_elem(Index,[H|T],Elem,[H|T2]):-
+    Index > 0,
+    I is Index - 1,
+    insert_elem(I,T,Elem,T2).
+
