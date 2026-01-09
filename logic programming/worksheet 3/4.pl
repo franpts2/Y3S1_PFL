@@ -37,3 +37,8 @@ list_del(List,Elem,Res):-
 list_before(First,Second,List):-
 	append(BefSecond,[Second|_],List),
 	append(_,[First|_],BefSecond). 
+
+% h)
+list_replace_one(X,Y,List1,List2):-
+	append(Bef,[X|After],List1),
+	append(Bef,[Y|After],List2).
