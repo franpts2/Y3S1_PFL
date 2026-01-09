@@ -13,9 +13,18 @@ list_to_aux(N,Acc,List):-
 list_from_to(Inf,Sup,List):-
 	list_from_to_aux(Inf,Sup,[Sup],List).
 
-list_from_to_aux(Sup,Sup,Acc,Acc).
+list_from_to_aux(Inf,Inf,Acc,Acc).
 
 list_from_to_aux(Inf,Sup,Acc,List):-
 	Sup > Inf,
 	Sup1 is Sup-1,
 	list_from_to_aux(Inf,Sup1,[Sup1|Acc],List).
+
+% c)
+list_from_to_step(Inf,Sup,_,[]):-
+    Inf > Sup.
+
+list_from_to_step(Inf,Sup,Step,[Inf|T]):-
+    Inf =< Sup,
+    Inf1 is Inf + Step;
+    list_from_to_step(Inf1,Sup,Step,T).
