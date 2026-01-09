@@ -19,3 +19,9 @@ list_nth(N,List,Elem):-
 	length(Prefix,N),
 	append(Prefix,[Elem|_],List).
 
+% e)
+lists_append([],[]).
+
+lists_append([H|T],List):-
+	lists_append(T,RestFlat), % flattens the lists
+	list_append(H,RestFlat,List). % backtracks 
