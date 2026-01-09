@@ -98,3 +98,14 @@ delete_elem(Index,[H|T],Elem,[H|Rest]):-
     I is Index - 1,
     delete_elem(I,T,Elem,Rest).
 
+% nth0 can be used to do both of the above!
+
+% k)
+replace([],_,_,_,[]).
+
+replace([H|T],0,H,New,[New|T]).
+
+replace([H|T],Index,Old,New,[H|Rest]):-
+    Index > 0,
+    I is Index - 1,
+    replace(T,I,Old,New,Rest).
