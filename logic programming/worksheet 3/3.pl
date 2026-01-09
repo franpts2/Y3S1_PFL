@@ -49,3 +49,15 @@ del_dups_last([H|T],List2):- % H is in tail (dup) - skip it
 del_dups_last([H|T],[H|Rest]):- % H is not in tail (dup) - keep it
     \+ memberchk(H,T),
     del_dups(T,Rest).
+
+% f)
+list_perm([],[]).
+
+list_perm([H|T],L2):-
+    my_select(H,L2,Rest), % find H in L2 and get remaining els Rest
+    list_perm(T,Rest).
+
+my_select(Elem,[Elem|T],T). % Head = Elem -> remainder is tail
+
+my_select(Elem,[H|T],[H|Rest]):- % Head\=Elem -> keep head and recurse on tail
+    my_select(Elem,T,Rest). 
