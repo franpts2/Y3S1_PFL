@@ -13,3 +13,9 @@ list_member(Elem,List):-
 % c)
 list_last(List,Last):-
 	list_append(_,[Last],List).
+
+% d)
+list_nth(N,List,Elem):-
+	length(Prefix,N),
+	append(Prefix,[Elem|_],List).
+
