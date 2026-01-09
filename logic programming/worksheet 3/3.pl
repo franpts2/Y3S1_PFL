@@ -14,3 +14,15 @@ del_one(Elem,[H|T],[H|Rest]):-
 	Elem \= H,
 	del_one(Elem,T,Rest).
 
+% c)
+del_all(_,[],[]).
+
+del_all(Elem,[Elem|T],List2):-
+    del_all(Elem,T,List2).
+
+del_all(Elem,[H|T],[H|Rest]):-
+	Elem \= H,
+	del_all(Elem,T,Rest).
+
+    
+
