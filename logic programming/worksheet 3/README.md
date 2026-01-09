@@ -4,3 +4,4 @@ The exercises I had more difficulty solving were:
 - 3 a)
 - 3 b)
 - 3 d)
+- 3 e)
