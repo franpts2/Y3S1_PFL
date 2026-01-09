@@ -69,3 +69,11 @@ replicate(Amount,Elem,[Elem|T]):-
     Amount > 0,
     NewAmount is Amount - 1,
     replicate(NewAmount,Elem,T).
+
+% h)
+intersperse(_,[],[]).
+
+intersperse(_,[X],[X]).
+
+intersperse(Elem,[H1, H2 |T],[H1, Elem |Rest]):-
+    intersperse(Elem,[H2|T],Rest).
