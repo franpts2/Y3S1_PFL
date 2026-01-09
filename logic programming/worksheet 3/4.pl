@@ -25,3 +25,11 @@ lists_append([],[]).
 lists_append([H|T],List):-
 	lists_append(T,RestFlat), % flattens the lists
 	list_append(H,RestFlat,List). % backtracks 
+
+% f)
+list_del([],_,[]).
+
+list_del(List,Elem,Res):-
+	append(Bef,[Elem|After],List), % split: List = Bef + [Elem|After]
+	append(Bef,After,Res).
+
