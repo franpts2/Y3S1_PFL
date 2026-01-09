@@ -27,8 +27,6 @@ lists_append([H|T],List):-
 	append(H,RestFlat,List). % backtracks 
 
 % f)
-list_del([],_,[]).
-
 list_del(List,Elem,Res):-
 	append(Bef,[Elem|After],List), % split: List = Bef + [Elem|After]
 	append(Bef,After,Res).
@@ -47,3 +45,9 @@ list_replace_one(X,Y,List1,List2):-
 list_repeated(X,List):-
 	append(_,[X|AfterFirstX],List),
 	append(_,[X|_],AfterFirstX).
+
+% k)
+list_shift_rotate(List1,N,List2):-
+	length(Prefix,N),
+	append(Prefix,Suffix,List1),
+	append(Suffix,Prefix,List2).
