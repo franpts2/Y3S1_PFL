@@ -42,3 +42,8 @@ list_before(First,Second,List):-
 list_replace_one(X,Y,List1,List2):-
 	append(Bef,[X|After],List1),
 	append(Bef,[Y|After],List2).
+
+% j)
+list_repeated(X,List):-
+	append(_,[X|AfterFirstX],List),
+	append(_,[X|_],AfterFirstX).
