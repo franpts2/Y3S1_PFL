@@ -88,3 +88,13 @@ insert_elem(Index,[H|T],Elem,[H|T2]):-
     I is Index - 1,
     insert_elem(I,T,Elem,T2).
 
+% j)
+delete_elem(_,[],_,[]).
+
+delete_elem(0,[H|T],H,T).
+
+delete_elem(Index,[H|T],Elem,[H|Rest]):-
+    Index > 0,
+    I is Index - 1,
+    delete_elem(I,T,Elem,Rest).
+
