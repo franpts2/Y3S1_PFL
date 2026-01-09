@@ -61,3 +61,11 @@ my_select(Elem,[Elem|T],T). % Head = Elem -> remainder is tail
 
 my_select(Elem,[H|T],[H|Rest]):- % Head\=Elem -> keep head and recurse on tail
     my_select(Elem,T,Rest). 
+
+% g)
+replicate(0,_,[]).
+
+replicate(Amount,Elem,[Elem|T]):-
+    Amount > 0,
+    NewAmount is Amount - 1,
+    replicate(NewAmount,Elem,T).
