@@ -7,3 +7,4 @@ The exercises I had more difficulty solving were:
 - 3 e)
 - 3 f)
 - 4 b)
+- 4 c)

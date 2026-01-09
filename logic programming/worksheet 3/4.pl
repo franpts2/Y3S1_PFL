@@ -9,3 +9,7 @@ list_append([H1|T1],L2,[H1|Rest]):-
 % b)
 list_member(Elem,List):-
 	list_append(_,[Elem|_],List).
+
+% c)
+list_last(List,Last):-
+	list_append(_,[Last],List).
