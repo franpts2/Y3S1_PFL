@@ -13,3 +13,11 @@ print_text(Text,Symbol,Padding):-
 	format('~s',[Text]), 		% ~s handles the list of ASCII codes
 	print_n(Padding,' '),
 	write(Symbol).
+
+% c)
+print_banner(Text,Symbol,Padding):-
+	length(Text,Len),
+	Width is 1 + Padding + Len + Padding + 1,
+	print_n(Width,Symbol), nl,
+	print_text(Text,Symbol,Padding), nl,
+	print_n(Width,Symbol).
