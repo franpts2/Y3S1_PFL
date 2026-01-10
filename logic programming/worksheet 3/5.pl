@@ -58,3 +58,26 @@ list_from_to_step_mod(Inf,Sup,_,[]):-
 
 list_from_to_step_mod(Inf,Sup,Step,List):-
     list_from_to_step(Inf,Sup,Step,List).
+
+% e)
+:-use_module(library(lists)).
+
+% from 4g worksheet 2
+is_prime(2).
+
+is_prime(X):-
+    X > 2,
+    check_no_factors(X,2).
+
+check_no_factors(X,X).
+
+check_no_factors(X,D):-
+    D < X,
+    X mod D =\= 0, % this div doesnt work
+    D1 is D+1,
+    check_no_factors(X,D1).
+% ---
+
+primes(N,List):-
+    list_to(N,Temp),
+    include(is_prime, Temp, List).

@@ -12,6 +12,8 @@
 
 - `Strings`: Represented as lists of character ASCII codes (e.g., `"Hello"` is `[72, 101, 108, 108, 111]`).
 
+- `:-use_module(library(lists)).`: to use the lists library
+
 ---
 
 ## 2. Fundamental Built-in Predicates
