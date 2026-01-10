@@ -61,6 +61,8 @@
 
     - `~f`: Prints a floating-point number.
 
+    - `~s`: Print strings that are represented as a list of character codes (double quoted)
+
 - **Character I/O**:
 
   - `get_char(C)` / `put_char(C)`: Handle single characters.
