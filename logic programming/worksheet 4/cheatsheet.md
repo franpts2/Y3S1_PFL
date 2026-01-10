@@ -14,19 +14,28 @@
 
 - **Green Cut**: Only improves efficiency; removing it does not change the set of solutions.
 
-
-
 ---
 
 ## 2. Negation and Conditionals
 
 - **Negation as Failure (NAF)**: `not(X) :- X, !, fail. not(_X).`
-    - Returns **yes** if `X` cannot be proven, **no** if `X` succeeds.
-    - Requires **ground terms** (no variables) to work reliably.
 
-- **If-Then-Else (via Cut)**: `if_then_else(If, Then, Else) :- If, !, Then. if_then_else(If, Then, Else) :- Else.`
+  - Returns **yes** if `X` cannot be proven, **no** if `X` succeeds.
 
-- **If-Then-Else (via NAF)**: `ite(If, Then, Else) :- If, Then. ite(If, Then, Else) :- not(If), Else.`
+  - Requires **ground terms** (no variables) to work reliably.
+
+- **If-Then-Else (via Cut)**:
+
+  ```prolog
+  if_then_else(If, Then, Else) :- If, !, Then.
+  if_then_else(If, Then, Else) :- Else.
+  ```
+
+- **If-Then-Else (via NAF)**:
+  ```prolog
+  ite(If, Then, Else) :- If, Then.
+  ite(If, Then, Else) :- not(If), Else.
+  ```
 
 ---
 
@@ -34,23 +43,43 @@
 
 - **Nature**: Stream-based and produces side effects that are **not** undone by backtracking.
 
-- **Term I/O**: 
-    - `read(X)`: Reads a term (must end with a period `.`).
-    - `write(X)`: Prints a term.
-    - `format(String, Args)`: Formatted output (similar to printf).
+- **Term I/O**:
+
+  - `read(X)`: Reads a term (must end with a period `.`).
+
+  - `write(X)`: Prints a term.
+
+  - `format(String, Args)`: Formatted output (similar to printf).
+
+    - `~w`: Writes the term as if using write/1.
+
+    - `~d`: Formats an integer as a decimal.
+
+    - `~n`: Outputs a new line (equivalent to nl).
+
+    - `~a`: Prints an atom without quotes.
+
+    - `~f`: Prints a floating-point number.
 
 - **Character I/O**:
-    - `get_char(C)` / `put_char(C)`: Handle single characters.
-    - `get_code(N)` / `put_code(N)`: Handle ASCII codes.
-    - `peek_char(C)` / `peek_code(N)`: Look at the next input without consuming it.
+
+  - `get_char(C)` / `put_char(C)`: Handle single characters.
+
+  - `get_code(N)` / `put_code(N)`: Handle ASCII codes.
+
+  - `peek_char(C)` / `peek_code(N)`: Look at the next input without consuming it.
 
 - **Stream Control**:
-    - `nl`: Prints a newline.
-    - `skip_line`: Clears the current input buffer until the next newline.
+
+  - `nl`: Prints a newline.
+
+  - `skip_line`: Clears the current input buffer until the next newline.
 
 - **File I/O**:
-    - `see(File)` / `seen`: Redirect input from a file / Close file.
-    - `tell(File)` / `told`: Redirect output to a file / Close file.
+
+  - `see(File)` / `seen`: Redirect input from a file / Close file.
+
+  - `tell(File)` / `told`: Redirect output to a file / Close file.
 
 ---
 
@@ -61,9 +90,12 @@
 - **`between(L, U, X)`**: Generates or tests if `X` is an integer between `L` and `U`.
 
 - **`library(random)`**:
-    - `random(L, U, V)`: Generates a random number in a range.
-    - `random_member(X, List)`: Selects a random element.
-    - `random_permutation(L1, L2)`: Randomly shuffles a list.
+
+  - `random(L, U, V)`: Generates a random number in a range.
+
+  - `random_member(X, List)`: Selects a random element.
+
+  - `random_permutation(L1, L2)`: Randomly shuffles a list.
 
 ---
 
