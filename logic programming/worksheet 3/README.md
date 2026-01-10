@@ -15,3 +15,4 @@ The exercises I had more difficulty solving were:
 - 4 k)
 - 5 c)
 - 5 f)
+- 7 b)
