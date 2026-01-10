@@ -81,3 +81,21 @@ check_no_factors(X,D):-
 primes(N,List):-
     list_to(N,Temp),
     include(is_prime, Temp, List).
+
+% f)
+% from worksheet 2, ex 4e (5: tail) 
+fibonacci(N,F):-
+	N >= 0,
+	fibonacci(N,0,1,F).
+
+fibonacci(0,A,_,A).
+
+fibonacci(N,A,B,F):-
+	N > 0,
+	N1 is N-1,
+	Next is A+B,
+	fibonacci(N1,B,Next,F).
+
+fibs(N,List):-
+    list_from_to(0,N,Indices),
+    maplist(fibonacci,Indices,List).

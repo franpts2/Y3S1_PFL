@@ -14,3 +14,4 @@ The exercises I had more difficulty solving were:
 - 4 g)
 - 4 k)
 - 5 c)
+- 5 f)
