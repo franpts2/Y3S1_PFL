@@ -16,3 +16,4 @@ The exercises I had more difficulty solving were:
 - 5 c)
 - 5 f)
 - 7 b)
+- 7 c)

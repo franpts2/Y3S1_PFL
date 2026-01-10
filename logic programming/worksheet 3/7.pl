@@ -15,3 +15,11 @@ insert_ordered(Value,[H|T],[Value,H|T]):-
 insert_ordered(Value,[H|T],[H|Rest]):-
 	Value > H,
 	insert_ordered(Value,T,Rest).
+
+% c)
+insert_sort([],[]).
+
+insert_sort([H|T],List2):-
+	insert_sort(T,SortedT),
+	insert_ordered(H,SortedT,List2).
+	
