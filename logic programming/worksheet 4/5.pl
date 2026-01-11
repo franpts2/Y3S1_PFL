@@ -52,3 +52,26 @@ read_until_between(Min,Max,Value):-
         write('Invalid input. Try again'), nl,
         fail    % force backtracking to repeat
     ).
+
+% f)
+my_reverse(List1,List2):-
+    my_reverse_aux(List1,[],List2).
+
+my_reverse_aux([],Acc,Acc).
+
+my_reverse_aux([H|T],Acc,List2):-
+    my_reverse_aux(T,[H|Acc],List2).
+
+read_string(X):-
+    read_string_aux([],X).
+
+read_string_aux(Acc,X):-
+    peek_code(Code),
+    ( Code == 10 ->
+        get_code(_),
+        my_reverse(Acc,Res),
+        X = Res
+    ;
+        get_code(C),
+        read_string_aux([C|Acc],X)
+    ).
