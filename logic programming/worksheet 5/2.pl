@@ -44,3 +44,7 @@ teachers(T):-
 % c)
 students_of(T,S):-
 	setof(Student,(teaches(C,T),attends(C,Student)),S).
+
+% d)
+teachers_of(S,T):-
+	setof(Teacher,C^(attends(C,S),teaches(C,Teacher)),T).
