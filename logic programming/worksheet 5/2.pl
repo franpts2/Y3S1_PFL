@@ -37,3 +37,10 @@ attends(networks,eduardo).
 % a)
 teachers(T):-
 	findall(Teacher,(teaches(_,Teacher)),T).
+
+% b)
+% using setof 
+
+% c)
+students_of(T,S):-
+	setof(Student,(teaches(C,T),attends(C,Student)),S).
