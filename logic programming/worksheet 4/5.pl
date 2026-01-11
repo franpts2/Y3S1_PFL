@@ -135,3 +135,28 @@ print_text_lines([H|T],Symbol,MaxLen,Padding):-
     NewPadding is Padding + ((MaxLen-(Padding*2)-2-Len)//2),
     print_text(H,Symbol,NewPadding), nl,
     print_text_lines(T,Symbol,MaxLen,Padding).
+
+% i)
+oh_christmas_tree(N):-
+    MaxWidth is (N-1)*2 + 1,
+    print_triangle(N,0,MaxWidth),
+    print_stem(MaxWidth).
+
+print_triangle(OgN,OgN,_):- !.
+
+print_triangle(OgN,HeightN,MaxWidth):-
+    NH is HeightN + 1,
+    WidthSymbols is (HeightN*2) + 1,
+    Padding is (MaxWidth-WidthSymbols)//2,
+
+    print_n(Padding,' '),
+    print_n(WidthSymbols,'*'),
+    print_n(Padding,' '), nl,
+
+    print_triangle(OgN,NH,MaxWidth).
+
+print_stem(Width):-
+    Padding is (Width - 1)//2,
+    print_n(Padding,' '),
+    write('*'),
+    print_n(Padding,' '), nl.
