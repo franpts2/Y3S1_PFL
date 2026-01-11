@@ -84,3 +84,7 @@ children_of([],[]).
 children_of([H|T],[H-ChildrenH|Rest]):-
 	children(H,ChildrenH),
 	children_of(T,Rest).
+
+% c)
+family(F):-
+	setof(P,(male(P);female(P)),F).
