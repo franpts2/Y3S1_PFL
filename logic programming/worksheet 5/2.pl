@@ -65,3 +65,14 @@ strangers(L):-
 		S1 @< S2,
 		\+ (attends(C3,S1),attends(C3,S2))
 	),L).
+
+% h)
+good_groups(L):-
+	setof(S1-S2,C1^C2^(
+		attends(C1,S1),
+		attends(C1,S2),
+		attends(C2,S1),
+		attends(C2,S2),
+		S1 @< S2,
+		C1 @< C2
+	),L).
