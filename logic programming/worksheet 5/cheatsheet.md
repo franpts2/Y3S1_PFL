@@ -12,7 +12,7 @@ Prolog provides three main predicates to collect all solutions to a query into a
 ### Advanced Collection Features
 * **Conjunctive Goals:** Use parentheses for multiple goals: `findall(C, (parent(P, C), female(C)), L)`.
 * **Compound Terms:** Collect multiple variables as a pair: `findall(P-C, parent(P, C), L)`.
-* **Existential Quantifier (`^`):** Used in `bagof` or `setof` to ignore specific variables for grouping: `bagof(Child, Parent^parent(Parent, Child), List)`.
+* **Existential Quantifier (`^`):** Used in `bagof` or `setof` to ignore specific variables for grouping (when the list appears in groups they are needed!)
 
 ---
 

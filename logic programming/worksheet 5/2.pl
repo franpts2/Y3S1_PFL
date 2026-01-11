@@ -52,3 +52,7 @@ teachers_of(S,T):-
 % e)
 common_courses(S1,S2,C):-
 	setof(Course,(attends(Course,S1),attends(Course,S2),S1\=S2),C).
+
+% f)
+more_than_one_course(L):-
+	setof(S,C1^C2^(attends(C1,S),attends(C2,S),C1\=C2),L).
