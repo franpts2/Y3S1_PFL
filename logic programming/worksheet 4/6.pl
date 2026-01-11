@@ -101,3 +101,19 @@ print_numbered_matrix_aux([H|T],NLine,NDigitsLastLine):-
 
 	NL1 is NLine + 1,
 	print_numbered_matrix_aux(T,NL1,NDigitsLastLine).
+
+% e)
+print_list_custom([],S,_,E):-
+	write(S), write(E), !.
+
+print_list_custom(L,S,Sep,E):-
+	write(S),
+	print_list_custom_aux(L,S,Sep,E).
+
+print_list_custom_aux([X],_,_,E):-
+	write(X), write(E), !.
+
+print_list_custom_aux([H|T],S,Sep,E):-
+	write(H),
+	write(Sep),
+	print_list_custom_aux(T,S,Sep,E).
