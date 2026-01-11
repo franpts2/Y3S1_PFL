@@ -107,3 +107,7 @@ spouse_children(Person,S-C):-
 immediate_family(Person,A-B):-
 	setof(Parent,(parent(Parent,Person)),A),
 	setof(SC,spouse_children(Person,SC),B).
+
+% h)
+parents_of_two(Parents):-
+	setof(Parent,C1^C2^(parent(Parent,C1),parent(Parent,C2),C1\=C2),Parents). % ^ to ignore the identity of C1 and C2 when grouping
