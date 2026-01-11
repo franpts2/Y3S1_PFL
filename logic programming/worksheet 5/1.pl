@@ -93,4 +93,8 @@ family(F):-
 couple(X-Y):-
 	parent(X,A),
 	parent(Y,A),
-	X \= Y.
+	X @< Y.
+
+% e)
+couples(List):-
+	setof(Couple,couple(Couple),List).
