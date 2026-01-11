@@ -42,3 +42,22 @@ print_schedule([]).
 print_schedule([Day-Time-C-Type-Dur | T]):-
 	format("~w (~w) - ~w at ~w (~wh)",[C,Type,Day,Time,Dur]), nl,
 	print_schedule(T).
+
+% g)
+% translate(+InternalDay, -DisplayDay)
+translate('1 Mon', 'Mon').
+translate('2 Tue', 'Tue').
+translate('3 Wed', 'Wed').
+translate('4 Thu', 'Thu').
+translate('5 Fri', 'Fri').
+
+schedule_mod:-
+	setof(Day-Time-C-Type-Dur,(class(C,Type,Day,Time,Dur)),SortedList), % set sorts automatically because we put Day first
+	print_schedule_mod(SortedList).
+
+print_schedule_mod([]).
+
+print_schedule_mod([Day-Time-C-Type-Dur | T]):-
+	translate(Day,TransDay),
+	format("~w (~w) - ~w at ~w (~wh)",[C,Type,TransDay,Time,Dur]), nl,
+	print_schedule_mod(T).
