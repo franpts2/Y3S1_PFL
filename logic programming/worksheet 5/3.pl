@@ -27,3 +27,7 @@ short_classes(L):-
 % d)
 course_classes(Course,Classes):-
 	setof(Day/Time-Type,Dur^(class(Course,Type,Day,Time,Dur)),Classes).
+
+% e)
+courses(L):-
+	setof(C,Type^Day^Time^Dur^(class(C,Type,Day,Time,Dur)),L).
