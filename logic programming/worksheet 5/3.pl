@@ -19,3 +19,7 @@ same_day(Course1,Course2):-
 % b)
 daily_courses(Day,Courses):-
 	setof(C,Type^Time^Dur^(class(C,Type,Day,Time,Dur)),Courses).
+
+% c)
+short_classes(L):-
+	setof(UC-Day/Time,Type^(class(UC,Type,Day,Time,Dur), (Dur < 2)),L).
