@@ -31,3 +31,14 @@ course_classes(Course,Classes):-
 % e)
 courses(L):-
 	setof(C,Type^Day^Time^Dur^(class(C,Type,Day,Time,Dur)),L).
+
+% f)
+schedule:-
+	setof(Day-Time-C-Type-Dur,(class(C,Type,Day,Time,Dur)),SortedList), % set sorts automatically because we put Day first
+	print_schedule(SortedList).
+
+print_schedule([]).
+
+print_schedule([Day-Time-C-Type-Dur | T]):-
+	format("~w (~w) - ~w at ~w (~wh)",[C,Type,Day,Time,Dur]), nl,
+	print_schedule(T).
