@@ -68,3 +68,36 @@ print_matrix([]):- !.
 print_matrix([H|T]):-
 	print_full_list(H), nl,
 	print_matrix(T).
+
+% d)
+:- use_module(library(lists)).
+
+print_n(0,_):- !.
+
+print_n(N,S):-
+	N1 is N - 1,
+	format('~w',[S]),
+	print_n(N1,S).
+
+n_digits(N, NDigits):-
+	number_codes(N,Codes),
+	length(Codes,NDigits).
+
+print_numbered_matrix(M):-
+	length(M,NLines),
+	n_digits(NLines,NDigitsLastLine),
+
+	print_numbered_matrix_aux(M,1,NDigitsLastLine).
+
+print_numbered_matrix_aux([],_,_):- !.
+
+print_numbered_matrix_aux([H|T],NLine,NDigitsLastLine):-
+	n_digits(NLine,LenNLine),
+	Padding is NDigitsLastLine - LenNLine,
+
+	print_n(Padding,' '),
+	format('~d ', [NLine]),
+	print_full_list(H), nl,
+
+	NL1 is NLine + 1,
+	print_numbered_matrix_aux(T,NL1,NDigitsLastLine).
