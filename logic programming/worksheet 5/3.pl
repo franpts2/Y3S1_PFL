@@ -61,3 +61,68 @@ print_schedule_mod([Day-Time-C-Type-Dur | T]):-
 	translate(Day,TransDay),
 	format("~w (~w) - ~w at ~w (~wh)",[C,Type,TransDay,Time,Dur]), nl,
 	print_schedule_mod(T).
+
+% h)
+read_number(X):-
+	read_number_aux(0,X).
+
+read_number_aux(Acc,X):-
+    peek_code(Code),
+    (Code == 10 ->      % check if Code is Line Feed (10)
+        get_code(_),    % consume line feed
+        X = Acc         % unified final result
+    ;
+        get_code(C),
+        Digit is C - 48, % convert ASCII to int
+        Acc1 is Acc*10 + Digit,
+        read_number_aux(Acc1,X)
+    ).
+
+my_reverse(List1,List2):-
+    my_reverse_aux(List1,[],List2).
+
+my_reverse_aux([],Acc,Acc).
+
+my_reverse_aux([H|T],Acc,List2):-
+    my_reverse_aux(T,[H|Acc],List2).
+
+% Converts your string (list of codes) into an atom for matching
+read_atom(Atom) :-
+    read_string(Codes),
+    atom_codes(Atom, Codes).
+
+% Updated read_string logic (using your provided structure)
+read_string(X):- read_string_aux([], X).
+
+read_string_aux(Acc, X):-
+    peek_code(Code),
+    ( Code == 10 ->
+        get_code(_),
+        my_reverse(Acc, X) % No need for an extra variable if we unify here
+    ;
+        get_code(C),
+        read_string_aux([C|Acc], X)
+    ).
+
+% same implementation as print_schedule but without base case so that msg can appear!
+print_classes([Day-Time-C-Type-Dur | T]):-
+	format("~w (~w) - ~w at ~w (~wh)",[C,Type,Day,Time,Dur]), nl,
+	print_classes(T).
+
+find_class:-
+	write('Insert day here: '),
+	read_atom(Day),
+	write('Insert time here: '),
+	read_number(Time), nl,
+
+	findall(Day-Time-C-Type-Dur, Type^( % findall instead of setof because findall retunrs empty list and setof fails instead
+		class(C,Type,Day,StartTime,Dur),
+		EndTime is StartTime + Dur,
+		Time >= StartTime, Time =< EndTime
+	),ClassesThatTime),
+
+	( ClassesThatTime \= [] ->
+		print_classes(ClassesThatTime)
+	;
+		write('No class is taking place.'), nl
+	).
