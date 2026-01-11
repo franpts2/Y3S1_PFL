@@ -3,16 +3,16 @@ print_n(0,_):- !.
 
 print_n(N,S):-
 	N1 is N - 1,
-	format('~w',[S]),
+	format('~s',[S]),
 	print_n(N1,S).
 
 % b)
 print_text(Text,Symbol,Padding):-
-	write(Symbol),
+	format('~s',[Symbol]),
 	print_n(Padding,' '),
 	format('~s',[Text]), 		% ~s handles the list of ASCII codes
 	print_n(Padding,' '),
-	write(Symbol).
+	format('~s',[Symbol]).
 
 % c)
 print_banner(Text,Symbol,Padding):-
@@ -75,3 +75,13 @@ read_string_aux(Acc,X):-
         get_code(C),
         read_string_aux([C|Acc],X)
     ).
+
+% g)
+banner:-
+    write('Write the text for the banner: '),
+    read_string(Text),
+    write('Insert the symbol for the banner: '),
+    read_string(Symbol),
+    write('Insert how many padding you want for the banner: '),
+    read_number(Padding),
+    print_banner(Text,Symbol,Padding).
