@@ -21,3 +21,19 @@ print_banner(Text,Symbol,Padding):-
 	print_n(Width,Symbol), nl,
 	print_text(Text,Symbol,Padding), nl,
 	print_n(Width,Symbol).
+
+% d)
+read_number(X):-
+	read_number_aux(0,X).
+
+read_number_aux(Acc,X):-
+    peek_code(Code),
+    (Code == 10 ->      % check if Code is Line Feed (10)
+        get_code(_),    % consume line feed
+        X = Acc         % unified final result
+    ;
+        get_code(C),
+        Digit is C - 48, % convert ASCII to int
+        Acc1 is Acc*10 + Digit,
+        read_number_aux(Acc1,X)
+    ).
