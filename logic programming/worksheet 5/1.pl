@@ -88,3 +88,9 @@ children_of([H|T],[H-ChildrenH|Rest]):-
 % c)
 family(F):-
 	setof(P,(male(P);female(P)),F).
+
+% d)
+couple(X-Y):-
+	parent(X,A),
+	parent(Y,A),
+	X \= Y.
