@@ -56,3 +56,12 @@ common_courses(S1,S2,C):-
 % f)
 more_than_one_course(L):-
 	setof(S,C1^C2^(attends(C1,S),attends(C2,S),C1\=C2),L).
+
+% g)
+strangers(L):-
+	setof(S1-S2,C1^C2^C3^(
+		attends(C1,S1), % cannot use _ inside a setof
+		attends(C2,S2),
+		S1 @< S2,
+		\+ (attends(C3,S1),attends(C3,S2))
+	),L).

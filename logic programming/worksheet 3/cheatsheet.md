@@ -1,5 +1,10 @@
 # Prolog Lists Cheatsheet
 
+use this to display full list:
+```prolog
+?- functor_on_list(Smth,L), write_term(L, [max_depth(0)])
+```
+
 ## 1. Syntax and Internal Representation
 
 - `[]`: The empty list representation.
