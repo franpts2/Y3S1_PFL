@@ -15,3 +15,7 @@ same_day(Course1,Course2):-
 	class(Course1,_,Day,_,_),
 	class(Course2,_,Day,_,_),
 	Course1 \= Course2.
+
+% b)
+daily_courses(Day,Courses):-
+	setof(C,Type^Time^Dur^(class(C,Type,Day,Time,Dur)),Courses).
