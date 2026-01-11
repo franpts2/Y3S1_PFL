@@ -98,3 +98,7 @@ couple(X-Y):-
 % e)
 couples(List):-
 	setof(Couple,couple(Couple),List).
+
+% f)
+spouse_children(Person,S-C):-
+	setof(Child,(parent(Person,Child),parent(S,Child), Person \= S),C).
