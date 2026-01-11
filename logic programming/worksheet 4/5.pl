@@ -37,3 +37,18 @@ read_number_aux(Acc,X):-
         Acc1 is Acc*10 + Digit,
         read_number_aux(Acc1,X)
     ).
+
+% e)
+:-use_module(library(between)).
+
+read_until_between(Min,Max,Value):-
+    repeat, % backtracking point
+    format('Enter a number between ~d and ~d: ',[Min,Max]),
+    read_number(Temp),
+    (between(Min,Max,Temp) ->
+        Value = Temp,
+        !
+    ;
+        write('Invalid input. Try again'), nl,
+        fail    % force backtracking to repeat
+    ).

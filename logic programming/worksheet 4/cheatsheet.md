@@ -85,7 +85,7 @@
 
 ---
 
-## 4. Useful Built-in Predicates
+## 4. Useful Predicates
 
 - **`repeat`**: Always succeeds; used to create infinite loops for user input until a condition is met.
 
