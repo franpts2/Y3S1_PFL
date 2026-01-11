@@ -61,3 +61,10 @@ print_last_three(L):-
 
 print_3elements([A, B, C]) :-
     format('~w, ~w, ~w', [A, B, C]).
+
+% c)
+print_matrix([]):- !.
+
+print_matrix([H|T]):-
+	print_full_list(H), nl,
+	print_matrix(T).
