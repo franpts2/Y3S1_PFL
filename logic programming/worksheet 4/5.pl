@@ -52,9 +52,9 @@ read_number_aux(Acc,X):-
 read_until_between(Min,Max,Value):-
     repeat, % backtracking point
     format('Enter a number between ~d and ~d: ',[Min,Max]),
-    read_number(TeMaxLen),
-    (between(Min,Max,TeMaxLen) ->
-        Value = TeMaxLen,
+    read_number(X),
+    (between(Min,Max,X) ->
+        Value = X,
         !
     ;
         write('Invalid input. Try again'), nl,
