@@ -48,3 +48,7 @@ students_of(T,S):-
 % d)
 teachers_of(S,T):-
 	setof(Teacher,C^(attends(C,S),teaches(C,Teacher)),T).
+
+% e)
+common_courses(S1,S2,C):-
+	setof(Course,(attends(Course,S1),attends(Course,S2),S1\=S2),C).
