@@ -44,11 +44,11 @@ del_dups_last([],[]).
 
 del_dups_last([H|T],List2):- % H is in tail (dup) - skip it
     memberchk(H,T),
-    del_dups(T,List2).
+    del_dups_last(T,List2).
 
 del_dups_last([H|T],[H|Rest]):- % H is not in tail (dup) - keep it
     \+ memberchk(H,T),
-    del_dups(T,Rest).
+    del_dups_last(T,Rest).
 
 % f)
 list_perm([],[]).
