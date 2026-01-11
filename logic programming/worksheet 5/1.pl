@@ -102,3 +102,8 @@ couples(List):-
 % f)
 spouse_children(Person,S-C):-
 	setof(Child,(parent(Person,Child),parent(S,Child), Person \= S),C).
+
+% g)
+immediate_family(Person,A-B):-
+	setof(Parent,(parent(Parent,Person)),A),
+	setof(SC,spouse_children(Person,SC),B).
