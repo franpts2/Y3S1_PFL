@@ -77,3 +77,10 @@ parent(dylan,poppy).
 % a) 
 children(Person,Children):-
 	findall(Child,parent(Person,Child), Children).
+
+% b)
+children_of([],[]).
+
+children_of([H|T],[H-ChildrenH|Rest]):-
+	children(H,ChildrenH),
+	children_of(T,Rest).
