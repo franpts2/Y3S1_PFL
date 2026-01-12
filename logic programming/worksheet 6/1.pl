@@ -18,3 +18,15 @@ fold(Pred,StartValue,[H|T],FinalValue):- % StartValue behaves as Acc
 	fold(Pred,NewAcc,T,FinalValue).
 
 sum(A, B, S):- S is A+B.
+
+% c)
+separate([],_,[],[]).
+
+separate([H|T],Pred,[H|RestYes],No):-
+	call(Pred,H), !,
+	separate(T,Pred,RestYes,No).
+
+separate([H|T],Pred,Yes,[H|RestNo]):-
+	separate(T,Pred,Yes,RestNo).
+
+even(X):- 0 =:= X mod 2.
