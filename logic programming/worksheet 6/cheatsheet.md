@@ -4,8 +4,8 @@
 
 Used to check the type or instantiation state of a term.
 
-| Predicate     | Description                                                                         |
-| :------------ | :---------------------------------------------------------------------------------- |
+| Predicate     | Description                                                           |
+| :------------ | :-------------------------------------------------------------------- |
 | `var(A)`      | True if `A` is an uninstantiated variable.                            |
 | `nonvar(A)`   | True if `A` is NOT a variable (atom, number, or compound).            |
 | `ground(A)`   | True if `A` contains no uninstantiated variables in any substructure. |
@@ -22,9 +22,20 @@ Predicates to decompose or construct terms dynamically.
 
 ### Key Predicates
 
-- **`functor(Term, Name, Arity)`**: Gets or sets the name and arity of a term.
-- **`arg(Index, Term, Arg)`**: Accesses the Nth argument of a term (starts at index 1).
-- **`Term =.. List` (Univ)**: Converts between a term and a list (e.g., `f(a,b) =.. [f, a, b]`).
+- **`functor(+Term,?Name,?Arity)` or `functor(?Term,+Name,+Arity)`**:
+
+  - if Term is instantiated, returns the name and arity of the term
+
+  - if Term is not instantiated, creates a new term with given name and arity
+
+- **`arg(+Index,+Term,?Arg)`**: instantiates Arg with the argument in the Nth position (starts at index 1).
+
+- **`+Term =.. ?[Name|Args]` or `?Term =.. +[Name|Args]` (Univ)**:
+
+  - given a term, returns a list w/ name and args of the term
+
+  - given a proper list, creates a new term w/ name and args as specified by the contents in the list
+
 - **`call(Goal, ...)`**: Executes a goal. Can be used for higher-order programming.
 
 ### Multi-Directional `sum/3` Example
@@ -56,11 +67,12 @@ Operators are defined by **Precedence** (1-1200, lower is higher priority) and *
 Defining Operators: `op(+Prec, +Type, +Name)`
 
 - **Types**:
-    - Infix: `xfx` (non-assoc), `xfy` (right-assoc), `yfx` (left-assoc).
 
-    - Prefix: `fx`, `fy`.
+  - Infix: `xfx` (non-assoc), `xfy` (right-assoc), `yfx` (left-assoc).
 
-    - Postfix: `xf`, `yf`.
+  - Prefix: `fx`, `fy`.
+
+  - Postfix: `xf`, `yf`.
 
 ---
 

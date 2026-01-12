@@ -2,3 +2,4 @@ The exercises I had more difficulty solving were:
 - 1 a)
 - 1 b)
 - 2 a)
+- 2 b)
