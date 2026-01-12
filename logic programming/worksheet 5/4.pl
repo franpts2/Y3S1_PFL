@@ -90,3 +90,16 @@ find_all_flights(Origin,Dest,Flights):-
 	findall(F,(
 		find_flights_bfs(Origin,Dest,F) % can also be find_all_flights/3
 	),Flights).
+
+% f)
+find_flights_least_stops(Origin,Dest,ListOfFlights):-
+	findall(F,(
+		find_flights_bfs(Origin,Dest,F)
+	),[Shortest|RestFlights]),
+
+	length(Shortest,MinLen),
+
+	findall(F,(
+		member(F,[Shortest|RestFlights]),
+		length(F,MinLen)
+	),ListOfFlights).
