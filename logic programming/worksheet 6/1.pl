@@ -17,8 +17,6 @@ fold(Pred,StartValue,[H|T],FinalValue):- % StartValue behaves as Acc
 	call(Pred,StartValue,H,NewAcc), % Pred(Acc,H,NewAcc)
 	fold(Pred,NewAcc,T,FinalValue).
 
-sum(A, B, S):- S is A+B.
-
 % c)
 separate([],_,[],[]).
 
@@ -29,4 +27,11 @@ separate([H|T],Pred,[H|RestYes],No):-
 separate([H|T],Pred,Yes,[H|RestNo]):-
 	separate(T,Pred,Yes,RestNo).
 
-even(X):- 0 =:= X mod 2.
+% d)
+take_while(_,[],[],[]).
+
+take_while(Pred,[H|T],[H|RestFront],Back):-
+	call(Pred,H), !,
+	take_while(Pred,T,RestFront,Back).
+
+take_while(_,Back,[],Back). % Pred fails -> rest is Back
