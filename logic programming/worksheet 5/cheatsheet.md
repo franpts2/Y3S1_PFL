@@ -19,18 +19,23 @@ Prolog provides three main predicates to collect all solutions to a query into a
 ## 2. Graphs and Search
 Graphs are represented as a set of `connected(Node1, Node2)` facts.
 
-### Depth-First Search (DFS) with Cycle Prevention
+### Depth-First Search (DFS) with Cycle Prevention and Paths
 To avoid infinite loops in graphs with cycles, use an accumulator to track visited nodes.
 
 ```prolog
-% connects_dfs(+Start, +Finish, +Visited, -Path)
-connects_dfs(S, F) :- connects_dfs(S, F, [S]).
+% Wrapper predicate
+connects_dfs(S, F, Path) :-
+    connects_dfs(S, F, [S], ReversedPath),
+    reverse(ReversedPath, Path). % Reverse to get S -> ... -> F order
 
-connects_dfs(F, F, _).
-connects_dfs(S, F, T) :-
+% Base case: Destination reached
+connects_dfs(F, F, Path, Path). 
+
+% Recursive case: Keep searching
+connects_dfs(S, F, T, Path) :-
     connected(S, N),
     not(memberchk(N, T)),
-    connects_dfs(N, F, [N|T]).
+    connects_dfs(N, F, [N|T], Path).
 ```
 
 ### Breadth-First Search (BFS)

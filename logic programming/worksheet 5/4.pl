@@ -41,4 +41,18 @@ most_diversified(Company):-
 		length(Cities,NumCities)
 		),L),
 	my_reverse(L,[MaxVal-AnyComp|Rest]),
-	member(MaxVal-Company,[MaxVal-AnyComp|Rest]).
+	member(MaxVal-Company,[MaxVal-AnyComp|Rest]). % for backtracking
+
+% c)
+not(X) :- X, !, fail. 
+not(_X).
+
+find_flights_dfs(Dest,Dest,_,[]).
+
+find_flights_dfs(Cur,Dest,Visited,[Code|Rest]):-
+	flight(Cur,Next,_,Code,_,_),
+	not(memberchk(Next,Visited)),
+	find_flights_dfs(Next,Dest,[Next|Visited],Rest).
+
+find_flights(Origin,Destination,Flights):-
+	find_flights_dfs(Origin,Destination,[Origin],Flights).
