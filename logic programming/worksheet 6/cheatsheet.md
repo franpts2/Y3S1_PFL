@@ -37,6 +37,16 @@ sum(A, B, S):- number(A), number(S), !, B is S - A.
 sum(A, B, S):- number(B), number(S), !, A is S - B.
 ```
 
+### `map` implementattion
+
+```prolog
+map(_,[]).
+map(P,[H|T]):-
+	G =.. [P,H],
+	G,
+	map(P,T).
+```
+
 ---
 
 ## 3. Operators
