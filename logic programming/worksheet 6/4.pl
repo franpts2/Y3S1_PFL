@@ -40,4 +40,13 @@ f) a la b la c
  /  \
 a    b
 
+g) a ra b ra c
+-> a ra (b ra c)
+
+   ra
+  /  \
+ a    ra
+     /  \
+    b    c
+
 */
