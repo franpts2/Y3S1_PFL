@@ -117,3 +117,26 @@ find_flights_stops_aux(Origin,Destination,[Stop|OtherStops],ListFlights):-
 	find_flights_bfs(Origin,Stop,Flight1),
 	find_flights_stops_aux(Stop,Destination,OtherStops,RestFlights),
 	append(Flight1,RestFlights,ListFlights).
+
+% h)
+/*
+white - unvisited nodes
+gray - node being visited (we are exploring its descendants)
+black - node already visited (we visited all its descendants) 
+*/
+find_circular_trip(MaxSize,Origin,Cycle):-
+	(find_cycle_dfs(Origin,Origin,[Origin],MaxSize,Cycle)).
+
+% cycle found! neighbour is gray
+find_cycle_dfs(Cur,Origin,_,MaxSize,[Code]):-
+	MaxSize >= 1,
+	flight(Cur,Origin,_,Code,_,_).
+
+% rec case. neighbour is white
+find_cycle_dfs(Cur,Origin,GrayNodes,MaxSize,[Code|Rest]):-
+	MaxSize > 1,
+	flight(Cur,Next,_,Code,_,_),
+	Next \= Origin,
+	not(member(Next,GrayNodes)), % node is white -> we explore it
+	NewMax is MaxSize - 1,
+	find_cycle_dfs(Next,Origin,[Next|GrayNodes],NewMax,Rest).
