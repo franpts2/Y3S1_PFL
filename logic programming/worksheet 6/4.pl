@@ -17,5 +17,9 @@ b) a la b na c
    /  \
   a    b
 
+c) a na b la c
+-> (a na b) la c
+
+ERROR
 
 */
