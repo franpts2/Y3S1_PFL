@@ -187,3 +187,12 @@ find_scc(V,Nodes,SCC):-
 	findall(U,(member(U,Nodes),can_reach(V,U,Nodes)),FromV),
 	findall(X,(member(X,FromV),can_reach(X,V,Nodes)),SCCWDups),
 	sort(SCCWDups,SCC).
+
+% l)
+bridges(ListOfBridges):-
+	get_all_nodes(Allowed),
+
+	findall(Code,Comp^Hr^Dur^Allowed^(
+		flight(Origin,Dest,Comp,Code,Hr,Dur),
+		not(can_reach(Dest,Origin,Allowed))
+	),ListOfBridges).
