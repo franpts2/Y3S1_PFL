@@ -49,4 +49,7 @@ g) a ra b ra c
      /  \
     b    c
 
+h) a la b ra c
+
+ERROR
 */
