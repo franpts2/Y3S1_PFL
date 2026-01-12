@@ -9,3 +9,4 @@ The exercises I had more difficulty solving were:
 - 4 c)
 - 5 a)
 - 6 b)
+- 7 c)
