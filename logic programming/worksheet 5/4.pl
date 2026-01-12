@@ -144,3 +144,24 @@ find_cycle_dfs(Cur,Origin,GrayNodes,MaxSize,[Code|Rest]):-
 % i)
 find_circular_trips(MaxSize,Origin,Cycles):-
 	setof(C,(find_circular_trip(MaxSize,Origin,C)),Cycles).
+
+% j)
+strongly_connected(ListOfNodes) :-
+    my_forall(member(U, ListOfNodes), 
+           my_forall(member(V, ListOfNodes), 
+                  can_reach(U, V, ListOfNodes))).
+
+my_forall(Cond,Action):-
+	not((Cond,not(Action))).
+
+% Checks if there is a path from A to B using only nodes in the Allowed list
+can_reach(A,B,Allowed):-
+	dfs_reach(A,B,[A],Allowed).
+
+dfs_reach(Dest,Dest,_,_).
+
+dfs_reach(Cur,Dest,Visited,Allowed):-
+	flight(Cur,Next,_,_,_,_),
+	member(Next,Allowed),
+	not(member(Next,Visited)),
+	dfs_reach(Next,Dest,[Next|Visited],Allowed).
