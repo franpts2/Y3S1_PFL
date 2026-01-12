@@ -35,3 +35,9 @@ take_while(Pred,[H|T],[H|RestFront],Back):-
 	take_while(Pred,T,RestFront,Back).
 
 take_while(_,Back,[],Back). % Pred fails -> rest is Back
+
+% e)
+ask_execute:-
+	write('Insert the goal to execute'), nl,
+	read(Goal),
+	call(Goal).
