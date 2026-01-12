@@ -3,3 +3,4 @@ The exercises I had more difficulty solving were:
 - 1 b)
 - 2 a)
 - 2 b)
+- 2 c)
