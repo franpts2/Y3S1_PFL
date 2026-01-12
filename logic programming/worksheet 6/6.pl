@@ -29,3 +29,11 @@ tp1949            16      15
            /    \
           Y      Z
 */
+
+% code to make b) usable
+if Condition then TruePart else FalsePart :-
+	( call(Condition) -> 
+		call(TruePart)
+	;
+		call(FalsePart)
+	).
