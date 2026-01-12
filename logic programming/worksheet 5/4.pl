@@ -103,3 +103,17 @@ find_flights_least_stops(Origin,Dest,ListOfFlights):-
 		member(F,[Shortest|RestFlights]),
 		length(F,MinLen)
 	),ListOfFlights).
+
+% g)
+find_flights_stops(Origin,Destination,Stops,ListFlights):-
+	setof(F,(
+		find_flights_stops_aux(Origin,Destination,Stops,F)
+	),ListFlights).
+
+find_flights_stops_aux(Origin,Dest,[],ListFlights):-
+	find_flights_bfs(Origin,Dest,ListFlights).
+
+find_flights_stops_aux(Origin,Destination,[Stop|OtherStops],ListFlights):-
+	find_flights_bfs(Origin,Stop,Flight1),
+	find_flights_stops_aux(Stop,Destination,OtherStops,RestFlights),
+	append(Flight1,RestFlights,ListFlights).
