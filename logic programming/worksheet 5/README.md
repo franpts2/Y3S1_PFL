@@ -10,3 +10,4 @@ The exercises I had more difficulty solving were:
 - 4 g)
 - 4 h)
 - 4 i)
+- 4 k)

@@ -165,3 +165,25 @@ dfs_reach(Cur,Dest,Visited,Allowed):-
 	member(Next,Allowed),
 	not(member(Next,Visited)),
 	dfs_reach(Next,Dest,[Next|Visited],Allowed).
+
+% k)
+strongly_connected_components(Components):-
+	get_all_nodes(Nodes),
+	tarjan(Nodes,Nodes,[],Components).
+
+tarjan([], _, Acc, Acc).
+
+tarjan([Node|Rest],AllNodes,Acc,Final):-
+	% if Node is not yet assigned to an SCC in Acc, find its component
+	( (member(Sub,Acc), member(Node,Sub)) ->
+		tarjan(Rest,AllNodes,Acc,Final)
+	;
+		find_scc(Node,AllNodes,NewSCC),
+		append(Acc,[NewSCC],MidAcc),
+		tarjan(Rest,AllNodes,MidAcc,Final)
+	).
+
+find_scc(V,Nodes,SCC):-
+	findall(U,(member(U,Nodes),can_reach(V,U,Nodes)),FromV),
+	findall(X,(member(X,FromV),can_reach(X,V,Nodes)),SCCWDups),
+	sort(SCCWDups,SCC).
