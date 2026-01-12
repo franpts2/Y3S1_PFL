@@ -30,4 +30,14 @@ ERROR
 e) a na b na c
 
 ERROR
+
+f) a la b la c
+-> (a la b) la c
+
+	 la
+    /  \
+  la    c
+ /  \
+a    b
+
 */
