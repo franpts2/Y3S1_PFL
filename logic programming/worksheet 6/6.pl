@@ -14,3 +14,18 @@ flight porto  lisbon  :
    \               /     \
 tp1949            16      15
 */
+
+% b)
+:- op(590, fx, if).
+:- op(580, xfx, then).
+:- op(570, xfx, else).
+
+/*
+		if
+         |
+       then
+     /      \
+    X       else
+           /    \
+          Y      Z
+*/
