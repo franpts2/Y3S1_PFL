@@ -140,3 +140,7 @@ find_cycle_dfs(Cur,Origin,GrayNodes,MaxSize,[Code|Rest]):-
 	not(member(Next,GrayNodes)), % node is white -> we explore it
 	NewMax is MaxSize - 1,
 	find_cycle_dfs(Next,Origin,[Next|GrayNodes],NewMax,Rest).
+
+% i)
+find_circular_trips(MaxSize,Origin,Cycles):-
+	setof(C,(find_circular_trip(MaxSize,Origin,C)),Cycles).
