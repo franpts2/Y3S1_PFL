@@ -74,6 +74,12 @@ Defining Operators: `op(+Prec, +Type, +Name)`
 
   - Postfix: `xf`, `yf`.
 
+| Code      | Associativity         | Parsing of `a f b f c` | Logic / Operand Requirement                                                       | Common Examples                        |
+| :-------- | :-------------------- | :--------------------- | :-------------------------------------------------------------------------------- | :------------------------------------- |
+| **`xfx`** | **Non-associative**   | **Syntax Error**       | Both operands must have strictly **lower** precedence than the operator.          | `=`, `is`, `\=`, `@<`                  |
+| **`yfx`** | **Left-associative**  | `(a f b) f c`          | The left operand can have **equal** or lower precedence; the right must be lower. | `+`, `-`, `*`, `/`                     |
+| **`xfy`** | **Right-associative** | `a f (b f c)`          | The right operand can have **equal** or lower precedence; the left must be lower. | `,` (conjunction), `;`, `^`, `xfy and` |
+
 ---
 
 ## 4. Computational Model Emulations
