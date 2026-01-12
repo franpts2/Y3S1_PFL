@@ -45,3 +45,7 @@ set_args(I, Arity, Term, [Arg | Rest]) :-
     arg(I, Term, Arg),
     Next is I + 1,
     set_args(Next, Arity, Term, Rest).
+
+% d)
+:- op(700, xfx, univ).
+% 700 like = or is
