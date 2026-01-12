@@ -43,13 +43,21 @@ connects_dfs(S, F, T, Path) :-
 Uses findall to expand all neighbors at the current level.
 
 ``` Prolog
-connects_bfs(S, F) :- connects_bfs([S], F, []).
+% Wrapper: Starts the queue with a single path containing the start node
+connects_bfs(S, F, Path) :-
+    connects_bfs([[S]], F, Path).
 
-connects_bfs([F|_], F, _).
-connects_bfs([S|R], F, V) :-
-    findall(N, (connected(S, N), not(memberchk(N, V)), not(memberchk(N, [S|R]))), L),
-    append(R, L, NR),
-    connects_bfs(NR, F, [S|V]).
+% Base case: The first path in the queue reaches the destination F
+connects_bfs([[F|T] | _], F, Path) :-
+    reverse([F|T], Path). % Reverse to get S -> ... -> F order
+
+% Recursive case: Expand the first path in the queue
+connects_bfs([[S|T] | R], F, Path) :-
+    findall([N, S | T], 
+        (connected(S, N), not(member(N, [S|T]))), 
+        NewPaths),
+    append(R, NewPaths, NextQueue),
+    connects_bfs(NextQueue, F, Path).
 ```
 
 ## 3. Binary Trees

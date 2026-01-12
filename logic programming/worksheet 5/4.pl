@@ -56,3 +56,31 @@ find_flights_dfs(Cur,Dest,Visited,[Code|Rest]):-
 
 find_flights(Origin,Destination,Flights):-
 	find_flights_dfs(Origin,Destination,[Origin],Flights).
+
+% d)
+find_flights_bfs(Origin,Destination,Flights):-
+	bfs_queue([[Origin]],Destination,Flights).
+
+% base case: 1st path in queue reaches destination 
+bfs_queue([[Dest|T]|_],Dest,Path):-
+	extract_codes_and_reverse([Dest|T],Path). % reverse to get S -> ... -> F order 
+
+bfs_queue([[Cur|T]|R],Dest,Path):-
+	findall([Next,Code,Cur|T],Comp^Hr^Dur^(
+		flight(Cur,Next,Comp,Code,Hr,Dur),
+		not(memberchk(Next,T))
+	),NewPaths),
+	append(R,NewPaths,NextQueue),
+	bfs_queue(NextQueue,Dest,Path).
+
+extract_codes_and_reverse(PathWCities,FinalCodes):-
+	extract_codes(PathWCities,CodesRev),
+	my_reverse(CodesRev,FinalCodes).
+
+
+% resulting list is like [City,Code,City,Code,...]
+extract_codes([],[]).
+extract_codes([_City],[]).
+
+extract_codes([_City,Code|T],[Code|Rest]):-
+	extract_codes(T,Rest).
