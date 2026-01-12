@@ -5,3 +5,4 @@ The exercises I had more difficulty solving were:
 - 3 b)
 - 3 c)
 - 4 a)
+- 4 b)
