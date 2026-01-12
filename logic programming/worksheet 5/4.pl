@@ -84,3 +84,9 @@ extract_codes([_City],[]).
 
 extract_codes([_City,Code|T],[Code|Rest]):-
 	extract_codes(T,Rest).
+
+% e)
+find_all_flights(Origin,Dest,Flights):-
+	findall(F,(
+		find_flights_bfs(Origin,Dest,F) % can also be find_all_flights/3
+	),Flights).
