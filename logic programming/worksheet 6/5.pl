@@ -18,4 +18,14 @@ b) tp class of pfl on mondays at 10:30.
 class  pfl  mondays   : 
   /                /     \
   tp              10      30
+
+c) pfl class at 17 on tuesdays of october.
+
+		  on
+        /     \
+     at       of
+    / \     /      \
+class 17  tuesdays  october
+  /
+ pfl
 */
