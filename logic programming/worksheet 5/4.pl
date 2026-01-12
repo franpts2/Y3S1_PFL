@@ -18,3 +18,27 @@ get_all_nodes(ListOfAirports):-
 		flight(A,Dest,Comp,Code,Hr,Dur);
 		flight(Orig,A,Comp2,Code2,Hr2,Dur2)
 		),ListOfAirports).
+
+% b)
+cities_by_company(Comp,Cities):-
+	setof(C,D^Code^Hr^Dur^(
+		flight(C,D,Comp,Code,Hr,Dur);
+		flight(D,C,Comp,Code,Hr,Dur)
+	),Cities).
+
+my_reverse(L1,L2):-
+	my_reverse_aux(L1,[],L2).
+
+my_reverse_aux([],Acc,Acc).
+
+my_reverse_aux([H|T],Acc,L2):-
+	my_reverse_aux(T,[H|Acc],L2).
+
+
+most_diversified(Company):-
+	setof(NumCities-Company,Cities^(
+		cities_by_company(Company,Cities),
+		length(Cities,NumCities)
+		),L),
+	my_reverse(L,[MaxVal-AnyComp|Rest]),
+	member(MaxVal-Company,[MaxVal-AnyComp|Rest]).
