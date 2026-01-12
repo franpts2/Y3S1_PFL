@@ -22,4 +22,8 @@ c) a na b la c
 
 ERROR
 
+d) a na b ra c
+-> a na (b ra c)
+
+ERROR
 */
