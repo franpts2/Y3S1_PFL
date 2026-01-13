@@ -1,156 +1,128 @@
 :- use_module(library(lists)).
 
-/*
-Board: [A,B,C,D,E,F] (each of A, B, C, D, E, F is one of green, yellow, blue, orange, white & black)
-*/
+% =============================================================================
+% 1. Core Logic (Part 1)
+% =============================================================================
+
+% The board layout consists of 6 slots: [A, B, C, D, E, F]
+% Slots A, B and D, E, F form the two edges; C is the connector
 colors([green, yellow, blue, orange, white, black]).
 
-% solve(+Constraints,-Board)
-solve([],Board).
- 
-solve(Constraints,Board):-
-	Board = [A,B,C,D,E,F],
+% solve(+Constraints, -Board)
+% Succeeds if a board permutation satisfies all provided constraints
+solve(Constraints, Board) :-
+    Board = [_A, _B, _C, _D, _E, _F],
+    colors(Colors),
+    permutation(Colors, Board),
+    check_constraints(Constraints, Board).
 
-	% generate permutation
-	colors(Colors),
-	permutation(Colors,Board),
+% Base case: no more constraints to verify
+check_constraints([], _Board).
 
-	check_constraints(Constraints,Board).
+% Recursive case: verify each constraint using call/2
+check_constraints([C|T], Board) :-
+    call(C, Board),
+    check_constraints(T, Board).
 
-% aux: check constraints recursively
-check_constraints([],_Board).
-
-check_constraints([C|T],Board):-
-	call(C,Board),
-	check_constraints(T,Board).
-
+% =============================================================================
+% 2. Scoring & Optimization (Part 2)
+% =============================================================================
 
 % best_score(+Constraints, -Score)
-best_score(Constraints,Score):-
-	% generate permutation
-	colors(Colors),
-	findall(CurScore,(
-		permutation(Colors,Board),
-		calculate_score(Constraints,Board,CurScore)
-	),AllScores),
+% Finds the maximum possible score (0 is best, -1 per violation)
+best_score(Constraints, Score) :-
+    colors(Colors),
+    findall(CurScore, (
+        permutation(Colors, Board),
+        calculate_score(Constraints, Board, CurScore)
+    ), AllScores),
+    max_list(AllScores, Score).
 
-	max_list(AllScores,Score).
+% calculate_score(+Constraints, +Board, -Score)
+% Base case: score starts at 0
+calculate_score([], _Board, 0).
 
-% aux: check constraints (and subtract points) recursively
-calculate_score([],_Board,0).
+% Success case: Constraint satisfied (0 points)
+calculate_score([C|T], Board, Score) :-
+    call(C, Board), !,
+    calculate_score(T, Board, RemainingScore),
+    Score is 0 + RemainingScore.
 
-calculate_score([C|T],Board,Score):-
-	call(C,Board), !,
-	calculate_score(T,Board,RemainingScore),
-	Score is 0 + RemainingScore.
+% Failure case: Constraint violated (-1 point)
+calculate_score([_|T], Board, Score) :-
+    calculate_score(T, Board, RemainingScore),
+    Score is -1 + RemainingScore.
 
-% constraint diesnt succeed
-calculate_score([_|T],Board,Score):-
-	calculate_score(T,Board,RemainingScore),
-	Score is -1 + RemainingScore.
+% =============================================================================
+% 3. Constraint Definitions
+% =============================================================================
 
-not(X) :- X, !, fail. 
-not(_X).
+% anywhere(X, Board): Always succeeds
+anywhere(_X, _Board).
 
-% max_list(+List, -Max)
-max_list([H|T], Max) :-
-    max_list_helper(T, H, Max).
+% next_to(X, Y, Board): X and Y are adjacent (excluding A and F)
+next_to(X, X, _Board).
+next_to(X, Y, Board) :- consecutive(X, Y, Board).
+next_to(X, Y, Board) :- consecutive(Y, X, Board).
 
-% max_list_helper(+RemainingList, +CurrentMax, -FinalMax)
-max_list_helper([], CurrentMax, CurrentMax).
+% one_space(X, Y, Board): Exactly one space between X and Y
+one_space(X, X, _Board).
+one_space(X, Y, Board) :- interspaced(X, Y, Board).
+one_space(X, Y, Board) :- interspaced(Y, X, Board).
 
-max_list_helper([H|T], CurrentMax, Max) :-
-    H > CurrentMax, !,
-    max_list_helper(T, H, Max).
+% across(X, Y, Board): X is on edge {A,B} and Y is on {D,E,F} (or vice-versa)
+across(X, X, _Board).
 
-max_list_helper([_|T], CurrentMax, Max) :-
-    max_list_helper(T, CurrentMax, Max).
+across(X, Y, [A, B, _C, D, E, F]) :-
+    (member(X, [A, B]), member(Y, [D, E, F])) ;
+    (member(X, [D, E, F]), member(Y, [A, B])).
 
-% anywhere(X, Board): X can go anywhere
-anywhere(_X,_Board).
+% same_edge(X, Y, Board): Both tokens on {A,B} or both on {D,E,F}
+same_edge(X, X, _Board).
 
-% next_to(X, Y, Board): X must be next to Y
-next_to(X,X,_).
+same_edge(X, Y, [A, B, _C, _D, _E, _F]) :- 
+	member(X, [A, B]), member(Y, [A, B]).
 
-next_to(X,Y,[A,B,C,D,E,F]):-
-	consecutive(X,Y,[A,B,C,D,E,F]).
+same_edge(X, Y, [_A, _B, _C, D, E, F]) :- 
+	member(X, [D, E, F]), member(Y, [D, E, F]).
 
-next_to(X,Y,[A,B,C,D,E,F]):-
-	consecutive(Y,X,[A,B,C,D,E,F]).
+% position(X, L, Board): X is at one of the 1-based indices in L
+position(X, L, Board) :-
+    nth1(Index, Board, X),
+    member(Index, L).
 
-% aux: consecutive - verifies if the first two args occur consecutively in the list provided in the 3rd arg
-consecutive(X,Y,Board):-
-	append(_Prefix,[X,Y|_Suffix],Board).
+% =============================================================================
+% 4. Helper Predicates
+% =============================================================================
 
+% consecutive/3: Checks if X and Y are adjacent in the list
+consecutive(X, Y, Board) :- append(_, [X, Y|_], Board).
 
-% one_space(X, Y, Board): X must be one space apart from Y
-one_space(X,X,_).
+% interspaced/3: Checks if X and Y have exactly one element between them
+interspaced(X, Y, Board) :- append(_, [X, _, Y|_], Board).
 
-one_space(X,Y,[A,B,C,D,E,F]):-
-	interspaced(X,Y,[A,B,C,D,E,F]).
+% max_list/2: Finds the largest number in a list
+max_list([H|T], Max) :- max_list_helper(T, H, Max).
+max_list_helper([], Max, Max).
+max_list_helper([H|T], CurrMax, Max) :- H > CurrMax, !, max_list_helper(T, H, Max).
+max_list_helper([_|T], CurrMax, Max) :- max_list_helper(T, CurrMax, Max).
 
-one_space(X,Y,[A,B,C,D,E,F]):-
-	interspaced(Y,X,[A,B,C,D,E,F]).
+% =============================================================================
+% 5. Example Puzzles
+% =============================================================================
 
-interspaced(X,Y,[A,B,C,D,E,F]):-
-	append(_,[X,_,Y|_],[A,B,C,D,E,F]).
+% Example 1: 12 solutions
+example(1, [next_to(white, orange), next_to(black, black), across(yellow, orange), 
+            next_to(green, yellow), position(blue, [1, 2, 6]), across(yellow, blue)]).
 
-% across(X, Y, Board): X must be across from Y (\= edges)
-across(X,X,_).
+% Example 2: 1 solution
+example(2, [across(white, yellow), position(black, [1, 4]), position(yellow, [1, 5]), 
+            next_to(green, blue), same_edge(blue, yellow), one_space(orange, black)]).
 
-across(X,Y,[A,B,_C,D,E,F]):-
-	(member(X,[A,B]), member(Y,[D,E,F]))
-	;
-	(member(X,[D,E,F]), member(Y,[A,B])).
+% Example 3: No solutions (Best score: -1)
+example(3, [across(white, yellow), position(black, [1, 4]), position(yellow, [1, 5]), 
+            same_edge(green, black), same_edge(blue, yellow), one_space(orange, black)]).
 
-% same_edge(X, Y, Board): X must be on the same edge as Y
-% edges: [A,B] & [D,E,F]
-same_edge(X,X,_).
-
-% both in edge [A,B]
-same_edge(X,Y,[A,B,_C,_D,_E,_F]):-
-	member(X,[A,B]),
-	member(Y,[A,B]).
-
-% both in edge [D,E,F]
-same_edge(X,Y,[_A,_B,_C,D,E,F]):-
-	member(X,[D,E,F]),
-	member(Y,[D,E,F]).
-
-% position(X, L, Board): X must be in one of the positions given in the list L
-position(X,L,Board):-
-	nth1(Index, Board, X),
-	member(Index, L).
-
-% TEST EXS - ?- example(1, _E), solve(_E, Solutions)
-%% 12 solutions
-example(1, [ next_to(white,orange),
-			next_to(black,black),
-			across(yellow,orange),
-			next_to(green,yellow),
-			position(blue,[1,2,6]),
-			across(yellow,blue) ]).
-
-%% 1 solution
-example(2, [ across(white,yellow),
-			position(black,[1,4]),
-			position(yellow,[1,5]),
-			next_to(green, blue),
-			same_edge(blue,yellow),
-			one_space(orange,black) ]).
-
-%% no solutions (5 constraints are satisfiable)
-example(3, [ across(white,yellow),
-			position(black,[1,4]),
-			position(yellow,[1,5]),
-			same_edge(green, black),
-			same_edge(blue,yellow),
-			one_space(orange,black) ]).
-
-%% same as above, different order of constraints
-example(4, [ position(yellow,[1,5]),
-			one_space(orange,black),
-			same_edge(green, black),
-			same_edge(blue,yellow),
-			position(black,[1,4]),
-			across(white,yellow) ]).
+% Example 4: same as above, different order of constraints
+example(4, [ position(yellow,[1,5]), one_space(orange,black), same_edge(green, black),
+			same_edge(blue,yellow), position(black,[1,4]), across(white,yellow) ]).
