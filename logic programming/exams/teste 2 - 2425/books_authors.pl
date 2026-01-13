@@ -21,3 +21,9 @@ book('Next', 4, 2006, 528, ['Science fiction', 'Techno-thriller', 'Satire']).
 book_author(Title, Author):-
 	book(Title,AuthorID,_,_,_),
 	author(AuthorID,Author,_,_).
+
+% Pergunta 2
+multi_genre_book(Title):-
+	book(Title,_,_,_,Genres),
+	length(Genres,NGenres),
+	NGenres > 1.
