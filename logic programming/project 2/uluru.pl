@@ -35,8 +35,13 @@ one_space(X,Y,[A,B,C,D,E,F]):-
 interspaced(X,Y,[A,B,C,D,E,F]):-
 	append(_,[X,_,Y|_],[A,B,C,D,E,F]).
 
-% across(X, Y, Board): X must be across from Y
+% across(X, Y, Board): X must be across from Y (\= edges)
+across(X,X,_).
 
+across(X,Y,[A,B,_C,D,E,F]):-
+	(member(X,[A,B]), member(Y,[D,E,F]))
+	;
+	(member(X,[D,E,F]), member(Y,[A,B])).
 
 % same_edge(X, Y, Board): X must be on the same edge as Y
 % edges: [A,B] & [D,E,F]
