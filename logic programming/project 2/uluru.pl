@@ -7,7 +7,8 @@ Board: [A,B,C,D,E,F] (each of A, B, C, D, E, F is one of green, yellow, blue, or
 
 
 % anywhere(X, Board): X can go anywhere
-
+anywhere(X,Board):-
+	member(X,Board).
 
 % next_to(X, Y, Board): X must be next to Y
 next_to(X,X,_).
@@ -39,7 +40,18 @@ interspaced(X,Y,[A,B,C,D,E,F]):-
 
 
 % same_edge(X, Y, Board): X must be on the same edge as Y
+% edges: [A,B] & [D,E,F]
+same_edge(X,X,_).
 
+% both in edge [A,B]
+same_edge(X,Y,[A,B,_C,_D,_E,_F]):-
+	member(X,[A,B]),
+	member(Y,[A,B]).
+
+% both in edge [D,E,F]
+same_edge(X,Y,[_A,_B,_C,D,E,F]):-
+	member(X,[D,E,F]),
+	member(Y,[D,E,F]).
 
 % position(X, L, Board): X must be in one of the positions given in the list L
 
