@@ -126,3 +126,20 @@ example(3, [across(white, yellow), position(black, [1, 4]), position(yellow, [1,
 % Example 4: same as above, different order of constraints
 example(4, [ position(yellow,[1,5]), one_space(orange,black), same_edge(green, black),
 			same_edge(blue,yellow), position(black,[1,4]), across(white,yellow) ]).
+
+
+% =============================================================================
+% 5. EXERCISES RELATED TO PROJECT
+% =============================================================================
+
+/*
+The current rules state that A and F are not next to each other.
+Task: Write a new predicate next_to_circular(X, Y, Board) that treats the board like a loop, meaning F is considered "next to" A
+*/
+next_to_circular(X, X, _Board).
+next_to_circular(X, Y, Board) :- consecutive_circular(X, Y, Board).
+next_to_circular(X, Y, Board) :- consecutive_circular(Y, X, Board).
+
+consecutive_circular(X, Y, Board) :- 
+	append(_, [X, Y|_], Board);
+	(append([X],_,Board),append(_,[Y],Board)).
