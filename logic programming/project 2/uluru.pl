@@ -1,15 +1,28 @@
+:- use_module(library(lists)).
+
 /*
 Board: [A,B,C,D,E,F] (each of A, B, C, D, E, F is one of green, yellow, blue, orange, white & black)
 */
-:- use_module(library(lists)).
+colors([green, yellow, blue, orange, white, black]).
 
 % solve(+Constraints,-Board)
-solve([],[]).
+solve([],Board).
+ 
+solve(Constraints,Board):-
+	Board = [A,B,C,D,E,F],
 
-% constraint succeeds
-solve([C|T],Board):-
+	% generate permutation
+	colors(Colors),
+	permutation(Colors,Board),
+
+	check_constraints(Constraints,Board).
+
+% aux: check constraints recursively
+check_constraints([],_Board).
+
+check_constraints([C|T],Board):-
 	call(C,Board),
-	solve(T,Board).
+	check_constraints(T,Board).
 
 % anywhere(X, Board): X can go anywhere
 anywhere(_X,_Board).
@@ -67,3 +80,35 @@ position(X,L,Board):-
 	nth1(Index, Board, X),
 	member(Index, L).
 
+% TEST EXS - ?- example(1, _E), solve(_E, Solutions)
+%% 12 solutions
+example(1, [ next_to(white,orange),
+			next_to(black,black),
+			across(yellow,orange),
+			next_to(green,yellow),
+			position(blue,[1,2,6]),
+			across(yellow,blue) ]).
+
+%% 1 solution
+example(2, [ across(white,yellow),
+			position(black,[1,4]),
+			position(yellow,[1,5]),
+			next_to(green, blue),
+			same_edge(blue,yellow),
+			one_space(orange,black) ]).
+
+%% no solutions (5 constraints are satisfiable)
+example(3, [ across(white,yellow),
+			position(black,[1,4]),
+			position(yellow,[1,5]),
+			same_edge(green, black),
+			same_edge(blue,yellow),
+			one_space(orange,black) ]).
+
+%% same as above, different order of constraints
+example(4, [ position(yellow,[1,5]),
+			one_space(orange,black),
+			same_edge(green, black),
+			same_edge(blue,yellow),
+			position(black,[1,4]),
+			across(white,yellow) ]).
