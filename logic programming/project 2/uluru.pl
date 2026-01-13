@@ -24,6 +24,48 @@ check_constraints([C|T],Board):-
 	call(C,Board),
 	check_constraints(T,Board).
 
+
+% best_score(+Constraints, -Score)
+best_score(Constraints,Score):-
+	% generate permutation
+	colors(Colors),
+	findall(CurScore,(
+		permutation(Colors,Board),
+		calculate_score(Constraints,Board,CurScore)
+	),AllScores),
+
+	max_list(AllScores,Score).
+
+% aux: check constraints (and subtract points) recursively
+calculate_score([],_Board,0).
+
+calculate_score([C|T],Board,Score):-
+	call(C,Board), !,
+	calculate_score(T,Board,RemainingScore),
+	Score is 0 + RemainingScore.
+
+% constraint diesnt succeed
+calculate_score([_|T],Board,Score):-
+	calculate_score(T,Board,RemainingScore),
+	Score is -1 + RemainingScore.
+
+not(X) :- X, !, fail. 
+not(_X).
+
+% max_list(+List, -Max)
+max_list([H|T], Max) :-
+    max_list_helper(T, H, Max).
+
+% max_list_helper(+RemainingList, +CurrentMax, -FinalMax)
+max_list_helper([], CurrentMax, CurrentMax).
+
+max_list_helper([H|T], CurrentMax, Max) :-
+    H > CurrentMax, !,
+    max_list_helper(T, H, Max).
+
+max_list_helper([_|T], CurrentMax, Max) :-
+    max_list_helper(T, CurrentMax, Max).
+
 % anywhere(X, Board): X can go anywhere
 anywhere(_X,_Board).
 
