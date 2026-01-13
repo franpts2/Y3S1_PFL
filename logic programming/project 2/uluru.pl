@@ -7,8 +7,7 @@ Board: [A,B,C,D,E,F] (each of A, B, C, D, E, F is one of green, yellow, blue, or
 
 
 % anywhere(X, Board): X can go anywhere
-anywhere(X,Board):-
-	member(X,Board).
+anywhere(_X,_Board).
 
 % next_to(X, Y, Board): X must be next to Y
 next_to(X,X,_).
@@ -54,5 +53,6 @@ same_edge(X,Y,[_A,_B,_C,D,E,F]):-
 	member(Y,[D,E,F]).
 
 % position(X, L, Board): X must be in one of the positions given in the list L
-
+position(X,L,_Board):-
+	member(X,L).
 
