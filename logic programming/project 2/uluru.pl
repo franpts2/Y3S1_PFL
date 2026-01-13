@@ -143,3 +143,12 @@ next_to_circular(X, Y, Board) :- consecutive_circular(Y, X, Board).
 consecutive_circular(X, Y, Board) :- 
 	append(_, [X, Y|_], Board);
 	(append([X],_,Board),append(_,[Y],Board)).
+
+/*
+In the travel-sized variant, we only have 6 positions. 
+Task: Write a predicate is_isolated(Color, Board) that succeeds if the given color is not next_to any specific target colors 
+(e.g., neither white nor black)
+*/
+is_isolated(X,Board):-
+	\+ next_to(X, white, Board),
+    \+ next_to(X, black, Board).
