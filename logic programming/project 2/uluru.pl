@@ -24,7 +24,16 @@ consecutive(X,Y,Board):-
 
 
 % one_space(X, Y, Board): X must be one space apart from Y
+one_space(X,X,_).
 
+one_space(X,Y,[A,B,C,D,E,F]):-
+	interspaced(X,Y,[A,B,C,D,E,F]).
+
+one_space(X,Y,[A,B,C,D,E,F]):-
+	interspaced(Y,X,[A,B,C,D,E,F]).
+
+interspaced(X,Y,[A,B,C,D,E,F]):-
+	append(_,[X,_,Y|_],[A,B,C,D,E,F]).
 
 % across(X, Y, Board): X must be across from Y
 
