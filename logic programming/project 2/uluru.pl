@@ -152,3 +152,10 @@ Task: Write a predicate is_isolated(Color, Board) that succeeds if the given col
 is_isolated(X,Board):-
 	\+ next_to(X, white, Board),
     \+ next_to(X, black, Board).
+
+/*
+The board is divided into two specific edges: {A,B} and {D,E,F}. 
+Task: Implement a constraint on_long_edge(Color, Board) that succeeds only if the token is in one of the three slots on the "long" edge (D,E,F)
+*/
+on_long_edge(X, [_A,_B,_C,D,E,F]):-
+	member(X,[D,E,F]).
