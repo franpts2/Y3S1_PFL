@@ -159,3 +159,40 @@ Task: Implement a constraint on_long_edge(Color, Board) that succeeds only if th
 */
 on_long_edge(X, [_A,_B,_C,D,E,F]):-
 	member(X,[D,E,F]).
+
+/*
+Currently, every violation costs exactly -1 point. 
+Task: Modify calculate_score/3 so that a violation of a position constraint is "cheaper" (costs -1), 
+but a violation of an across constraint is "expensive" (costs -5)
+*/
+
+% best_score(+Constraints, -Score)
+% Finds the maximum possible score (0 is best, -1 per violation)
+best_score_mod(Constraints, Score) :-
+    colors(Colors),
+    findall(CurScore, (
+        permutation(Colors, Board),
+        calculate_score_mod(Constraints, Board, CurScore)
+    ), AllScores),
+    max_list(AllScores, Score).
+
+% calculate_score(+Constraints, +Board, -Score)
+% Base case: score starts at 0
+calculate_score_mod([], _Board, 0).
+
+% Success case: Constraint satisfied (0 points)
+calculate_score_mod([C|T], Board, Score) :-
+    call(C, Board), !,
+    calculate_score_mod(T, Board, RemainingScore),
+    Score is 0 + RemainingScore.
+
+% Failure case: Constraint ACROSS violated (-5 point)
+calculate_score_mod([across(X,Y)|T], Board, Score) :-
+	\+ across(X,Y,Board), !,
+    calculate_score_mod(T, Board, RemainingScore),
+    Score is -5 + RemainingScore.
+
+% Failure case: other constraint violated (-1 point)
+calculate_score_mod([_|T], Board, Score) :-
+    calculate_score_mod(T, Board, RemainingScore),
+    Score is -1 + RemainingScore.
