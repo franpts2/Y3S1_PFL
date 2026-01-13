@@ -1,10 +1,15 @@
 /*
 Board: [A,B,C,D,E,F] (each of A, B, C, D, E, F is one of green, yellow, blue, orange, white & black)
 */
+:- use_module(library(lists)).
 
 % solve(+Constraints,-Board)
+solve([],[]).
 
-
+% constraint succeeds
+solve([C|T],Board):-
+	call(C,Board),
+	solve(T,Board).
 
 % anywhere(X, Board): X can go anywhere
 anywhere(_X,_Board).
@@ -58,6 +63,7 @@ same_edge(X,Y,[_A,_B,_C,D,E,F]):-
 	member(Y,[D,E,F]).
 
 % position(X, L, Board): X must be in one of the positions given in the list L
-position(X,L,_Board):-
-	member(X,L).
+position(X,L,Board):-
+	nth1(Index, Board, X),
+	member(Index, L).
 
