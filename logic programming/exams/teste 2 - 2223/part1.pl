@@ -37,3 +37,9 @@ price_ingrs([Ingr-Qt| T],Acc,Res):-
 most_expensive_dish(Dish,Price):-
 	dish(Dish,Price,_),
 	\+ (dish(_, HigherPrice, _), HigherPrice > Price).
+
+% Pergunta 6
+consume_ingredient(IngredientStocks,Ingredient,Grams,NewIngredientStocks):-
+	append(B, [Ingredient-OldAmount|A], IngredientStocks),
+	NewAmount is OldAmount - Grams,
+	append(B, [Ingredient-NewAmount|A], NewIngredientStocks).
