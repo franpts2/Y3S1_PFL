@@ -51,3 +51,6 @@ similarity(Title1, Title2, Similarity):-
 union([], L, L).
     union([H|T], L, R):-memberchk(H, L), !, union(T, L, R).
     union([H|T], L, [H|R]):-union(T, L, R).
+
+% Pergunta 5
+% -> A
