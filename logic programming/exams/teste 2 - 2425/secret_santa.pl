@@ -30,3 +30,6 @@ find_cycle_dfs(Cur,Origin,GrayNodes,FinalSize,Size,[Book|Rest]):-
 	
 % Pergunta 8
 % -> d
+
+% Pergunta 9
+% -> C e E
