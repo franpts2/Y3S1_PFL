@@ -32,3 +32,8 @@ price_ingrs([Ingr-Qt| T],Acc,Res):-
 	ingredient_amount_cost(Ingr,Qt,PriceIngr),
 	Acc1 is Acc + PriceIngr,
 	price_ingrs(T,Acc1,Res).
+
+% Pergunta 5 (w help)
+most_expensive_dish(Dish,Price):-
+	dish(Dish,Price,_),
+	\+ (dish(_, HigherPrice, _), HigherPrice > Price).
