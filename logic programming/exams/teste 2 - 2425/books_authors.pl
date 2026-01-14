@@ -27,3 +27,13 @@ multi_genre_book(Title):-
 	book(Title,_,_,_,Genres),
 	length(Genres,NGenres),
 	NGenres > 1.
+
+% Pergunta 3
+shared_genres(Title1,Title2,CommonGenres):-
+	book(Title1,_,_,_,Genres1),
+	book(Title2,_,_,_,Genres2),
+	intersect(Genres1,Genres2,CommonGenres).
+
+intersect([], _, []).
+intersect([H|T], L, [H|R]):-memberchk(H, L), !, intersect(T, L, R).
+intersect([_|T], L, R):-intersect(T, L, R).
