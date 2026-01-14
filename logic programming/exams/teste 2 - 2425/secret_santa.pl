@@ -19,6 +19,27 @@ collect_circle([Cur|T],People):-
 	\+ member(Next,[Cur|T]), !,
 	collect_circle([Next,Cur|T],People).
 
+% Pergunta 7 (w help)
+largest_circle(People):-
+	all_people(Everyone),
+	setof(Size-SortedCircle,Person^Circle^(
+		member(Person,Everyone),
+		collect_circle([Person],Circle),
+		sort(Circle,SortedCircle),
+		length(SortedCircle,Size)
+	),AllPairs),
+
+	my_last(AllPairs,MaxSize-_,_),
+	member(MaxSize-People,AllPairs).
+
+all_people(List) :-
+    findall(X, (gives_gift_to(X, _, _); gives_gift_to(_, _, X)), Temp),
+    sort(Temp, List).
+
+my_last([H|T], Last, Init) :- my_last_aux(T, H, Last, Init).
+my_last_aux([], Last, Last, []).
+my_last_aux([H|T], Prev, Last, [Prev|Rest]) :- my_last_aux(T, H, Last, Rest).
+
 % person is already in Visited list
 collect_circle(People,People).
 
