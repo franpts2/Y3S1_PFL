@@ -42,4 +42,9 @@ most_expensive_dish(Dish,Price):-
 consume_ingredient(IngredientStocks,Ingredient,Grams,NewIngredientStocks):-
 	append(B, [Ingredient-OldAmount|A], IngredientStocks),
 	NewAmount is OldAmount - Grams,
+	NewAmount < 0, !, fail.
+
+consume_ingredient(IngredientStocks,Ingredient,Grams,NewIngredientStocks):-
+	append(B, [Ingredient-OldAmount|A], IngredientStocks),
+	NewAmount is OldAmount - Grams,	
 	append(B, [Ingredient-NewAmount|A], NewIngredientStocks).
