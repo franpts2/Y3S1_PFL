@@ -9,25 +9,19 @@ gives_gift_to(marciliano, 'Those in Peril', nivaldo).
 gives_gift_to(nivaldo, 'Vicious Circle', sandrino).
 gives_gift_to(sandrino, 'Predator', marciliano).
 
-% Pergunta 6
+% Pergunta 6 - (with help)
 circle_size(Person,Size):-
-	find_circular_trip(Size,_,Person,_).
-
-find_circular_trip(FinalSize,_Size,Origin,Cycle):-
-	(find_cycle_dfs(Origin,Origin,[Origin],FinalSize,0,Cycle)).
-
-% cycle found! neighbour is gray
-find_cycle_dfs(Cur,Origin,_,FinalSize,FinalSize,[Book]):-
-	gives_gift_to(Cur,Book,Origin).
-
-% rec case. neighbour is white
-find_cycle_dfs(Cur,Origin,GrayNodes,FinalSize,Size,[Book|Rest]):-
-	gives_gift_to(Cur,Book,Next),
-	Next \= Origin,
-	\+ member(Next,GrayNodes), % node is white -> we explore it
-	NewSize is Size + 1,
-	find_cycle_dfs(Next,Origin,[Next|GrayNodes],NewSize,FinalSize,Rest).
+	collect_circle([Person],People),
+	length(People,Size).
 	
+collect_circle([Cur|T],People):-
+	gives_gift_to(Cur,_,Next),
+	\+ member(Next,[Cur|T]), !,
+	collect_circle([Next,Cur|T],People).
+
+% person is already in Visited list
+collect_circle(People,People).
+
 % Pergunta 8
 % -> d
 
