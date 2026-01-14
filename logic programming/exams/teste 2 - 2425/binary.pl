@@ -46,3 +46,26 @@ initialize(DecNumber,Bits,Padding,List):-
 	repeat(0,Padding,PZeros),
 	append(PZeros,Res,ZerosLeft),
 	append(ZerosLeft,PZeros,List).
+
+% Pergunta 12
+translate(0,'.').
+translate(1,'M').
+
+print_generation(List):-
+	print_generation_aux(List,1).
+
+print_generation_aux([],_).
+
+print_generation_aux([H|T],NPassed):- % mult of 8
+	NPassed mod 8 =:= 0, !, 
+	translate(H,P),
+	write(P),
+	write(' | '),
+	NP is NPassed + 1,
+	print_generation_aux(T,NP).
+
+print_generation_aux([H|T], NPassed):-
+	translate(H,P),
+	write(P),
+	NP is NPassed + 1,
+	print_generation_aux(T,NP).
