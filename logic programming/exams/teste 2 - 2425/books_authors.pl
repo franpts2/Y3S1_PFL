@@ -37,3 +37,17 @@ shared_genres(Title1,Title2,CommonGenres):-
 intersect([], _, []).
 intersect([H|T], L, [H|R]):-memberchk(H, L), !, intersect(T, L, R).
 intersect([_|T], L, R):-intersect(T, L, R).
+
+% Pergunta 4
+similarity(Title1, Title2, Similarity):-
+	book(Title1,_,_,_,Genres1),
+	book(Title2,_,_,_,Genres2),
+	intersect(Genres1,Genres2,CommonGenres),
+	length(CommonGenres,NIntersection),
+	union(Genres1,Genres2,AllGenres),
+	length(AllGenres,NUnion),
+	Similarity is NIntersection / NUnion.
+
+union([], L, L).
+    union([H|T], L, R):-memberchk(H, L), !, union(T, L, R).
+    union([H|T], L, [H|R]):-union(T, L, R).
