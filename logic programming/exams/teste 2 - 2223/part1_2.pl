@@ -62,3 +62,16 @@ collector_rec(Ingredient,Acc, Res) :-
 	collector_rec(Ingredient,[X|Acc], Res).
 
 collector_rec(_,Acc, Acc).
+
+% Pergunta 8
+list_dishes(DishIngredients):-
+	setof(D-LI,O^LIngrs^(
+		dish(D,O,LIngrs),
+		only_ingrs(LIngrs,LI)
+	),DishIngredients).
+
+only_ingrs([],[]).
+
+only_ingrs([Ingr-_|T],[Ingr|Rest]):-
+	only_ingrs(T,Rest).
+	 
