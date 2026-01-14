@@ -19,3 +19,16 @@ count_ingredients(Dish,NumIngredients):-
 ingredient_amount_cost(Ingredient,Grams,TotalCost):-
 	ingredient(Ingredient,CostPGram),
 	TotalCost is Grams*CostPGram.
+
+% Pergunta 3
+dish_profit(Dish,Profit):-
+	dish(Dish,Price,Ingrs),
+	price_ingrs(Ingrs,0,PriceIngrs),
+	Profit is Price - PriceIngrs.
+
+price_ingrs([],Acc,Acc).
+
+price_ingrs([Ingr-Qt| T],Acc,Res):-
+	ingredient_amount_cost(Ingr,Qt,PriceIngr),
+	Acc1 is Acc + PriceIngr,
+	price_ingrs(T,Acc1,Res).
