@@ -161,9 +161,10 @@ on_long_edge(X, [_A,_B,_C,D,E,F]):-
 	member(X,[D,E,F]).
 
 /*
-Currently, every violation costs exactly -1 point. 
-Task: Modify calculate_score/3 so that a violation of a position constraint is "cheaper" (costs -1), 
-but a violation of an across constraint is "expensive" (costs -5)
+In Part 2, your calculate_score/3 treats every failed constraint as a -1 penalty. 
+Task: The game designers want to introduce a "Critical Constraint." 
+Write a specialized version of the scoring clause specifically for the across(X, Y) constraint. 
+If an across constraint is violated, it should subtract 5 points instead of 1. All other violations remain -1.
 */
 
 % best_score(+Constraints, -Score)
