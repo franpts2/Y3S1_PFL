@@ -39,8 +39,8 @@ most_expensive_dish(Dish,Price):-
 	\+ (dish(_, HigherPrice, _), HigherPrice > Price).
 
 % Pergunta 6
-consume_ingredient(IngredientStocks,Ingredient,Grams,NewIngredientStocks):-
-	append(B, [Ingredient-OldAmount|A], IngredientStocks),
+consume_ingredient(IngredientStocks,Ingredient,Grams,_):-
+	append(_, [Ingredient-OldAmount|_], IngredientStocks),
 	NewAmount is OldAmount - Grams,
 	NewAmount < 0, !, fail.
 
@@ -48,3 +48,17 @@ consume_ingredient(IngredientStocks,Ingredient,Grams,NewIngredientStocks):-
 	append(B, [Ingredient-OldAmount|A], IngredientStocks),
 	NewAmount is OldAmount - Grams,	
 	append(B, [Ingredient-NewAmount|A], NewIngredientStocks).
+
+% Pergunta 7
+count_dishes_with_ingredient(Ingredient,N):-
+	collect_all(Ingredient,Results),
+	length(Results,N).
+
+collect_all(Ingredient,Results) :- collector_rec(Ingredient,[], Results).
+collector_rec(Ingredient,Acc, Res) :- 
+	dish(X,_,ListIngredients), 
+	member(Ingredient-_,ListIngredients),
+	\+ member(X, Acc), !, 
+	collector_rec(Ingredient,[X|Acc], Res).
+
+collector_rec(_,Acc, Acc).
