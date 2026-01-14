@@ -44,7 +44,7 @@ my_last_aux([H|T], Prev, Last, [Prev|Rest]) :- my_last_aux(T, H, Last, Rest).
 collect_circle(People,People).
 
 % Pergunta 8
-% -> d
+% -> C
 
 % Pergunta 9
-% -> C e E
+% -> A e E
