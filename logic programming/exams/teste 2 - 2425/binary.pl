@@ -32,3 +32,17 @@ append_zeros(List,N,Len,Res):-
 repeat(Elem,N,List):-repeat_aux(Elem,N,[],List). 
 repeat_aux(_,0,Acc,Acc). 
 repeat_aux(Elem,N,Acc,List):-N > 0,N1 is N-1,repeat_aux(Elem,N1,[Elem|Acc],List).
+
+% Pergunta 11
+initialize(DecNumber,Bits,Padding,List):-
+	dec_to_base(DecNumber,2,Temp),
+	length(Temp,Len),
+	Len =< Bits, !,
+
+	NZeros is Bits - Len,
+	repeat(0,NZeros,Zeros),
+	append(Zeros,Temp,Res),
+
+	repeat(0,Padding,PZeros),
+	append(PZeros,Res,ZerosLeft),
+	append(ZerosLeft,PZeros,List).
