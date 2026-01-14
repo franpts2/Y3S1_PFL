@@ -14,3 +14,8 @@ ingredient(garlic, 6).
 count_ingredients(Dish,NumIngredients):-
 	dish(Dish,_,Ingrs),
 	length(Ingrs,NumIngredients).
+
+% Pergunta 2
+ingredient_amount_cost(Ingredient,Grams,TotalCost):-
+	ingredient(Ingredient,CostPGram),
+	TotalCost is Grams*CostPGram.
